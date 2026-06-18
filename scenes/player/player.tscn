@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://b2ob7yajdfsev"]
+
+[ext_resource type="Script" uid="uid://cm130xaljabxc" path="res://scripts/player/movement_component/movement_component.gd" id="1_8afob"]
+[ext_resource type="Script" uid="uid://crjdxi0kyvp4x" path="res://scripts/player/player.gd" id="1_gmlin"]
+[ext_resource type="Script" uid="uid://byowxcwjjma33" path="res://scripts/player/ui_component/ui_component.gd" id="2_dovo2"]
+[ext_resource type="Texture2D" uid="uid://dyi3mt0c7uk13" path="res://assets/ui/player/stats/name_role_card.png" id="4_lvxji"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="5_p47bc"]
+[ext_resource type="Texture2D" uid="uid://bia1afy8xva7r" path="res://assets/ui/player/stats/Date&HourCard.png" id="6_0owmy"]
+[ext_resource type="LabelSettings" uid="uid://cley1p6fdspsd" path="res://tres/labels/default.tres" id="7_qek5x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_75vfm"]
+font = ExtResource("5_p47bc")
+font_size = 63
+
+[sub_resource type="LabelSettings" id="LabelSettings_0owmy"]
+font = ExtResource("5_p47bc")
+font_size = 39
+font_color = Color(0.14509805, 1, 1, 1)
+
+[node name="Player" type="Node3D" unique_id=1002844316 node_paths=PackedStringArray("camera")]
+script = ExtResource("1_gmlin")
+camera = NodePath("Camera3D")
+
+[node name="MovementComponent" type="Node3D" parent="." unique_id=394390015]
+script = ExtResource("1_8afob")
+drag_sensitivity = 3.0
+
+[node name="UI_Canvas" type="Control" parent="." unique_id=1027798498]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="UIComponent" type="Control" parent="UI_Canvas" unique_id=1826443537 groups=["player_ui"]]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_dovo2")
+metadata/_custom_type_script = "uid://byowxcwjjma33"
+
+[node name="PlayerCard" type="TextureRect" parent="UI_Canvas/UIComponent" unique_id=988098050]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = 14.000002
+offset_top = 17.000002
+offset_right = 947.0
+offset_bottom = 247.0
+scale = Vector2(0.455, 0.455)
+texture = ExtResource("4_lvxji")
+
+[node name="Name Label" type="Label" parent="UI_Canvas/UIComponent/PlayerCard" unique_id=164767312]
+layout_mode = 0
+offset_left = 206.5934
+offset_top = 37.362625
+offset_right = 451.59338
+offset_bottom = 119.362625
+text = "Eminem"
+label_settings = SubResource("LabelSettings_75vfm")
+
+[node name="Role Label" type="Label" parent="UI_Canvas/UIComponent/PlayerCard" unique_id=1118859942]
+layout_mode = 0
+offset_left = 208.7912
+offset_top = 123.076904
+offset_right = 453.79117
+offset_bottom = 205.0769
+text = "Estudiante"
+label_settings = SubResource("LabelSettings_0owmy")
+
+[node name="PlayerPFP" type="TextureRect" parent="UI_Canvas/UIComponent/PlayerCard" unique_id=696693711]
+layout_mode = 0
+offset_left = 39.560436
+offset_top = 43.95604
+offset_right = 79.56044
+offset_bottom = 83.95604
+scale = Vector2(3.4615397, 3.549449)
+
+[node name="Date&HourCard" type="TextureRect" parent="UI_Canvas/UIComponent" unique_id=1128952744]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 130.0
+offset_right = 947.0
+offset_bottom = 360.0
+scale = Vector2(0.285, 0.285)
+texture = ExtResource("6_0owmy")
+
+[node name="Name Label" type="Label" parent="UI_Canvas/UIComponent/Date&HourCard" unique_id=480852550]
+layout_mode = 0
+offset_left = 59.574448
+offset_top = 80.85108
+offset_right = 304.57446
+offset_bottom = 162.85107
+text = "23/06/2026 11:20 AM"
+label_settings = ExtResource("7_qek5x")
+
+[node name="ToastContainer" type="VBoxContainer" parent="UI_Canvas/UIComponent" unique_id=595662213 groups=["toast_container"]]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 547.0
+offset_right = 1125.0
+offset_bottom = 623.0
+mouse_filter = 2
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1767391642 groups=["Camera"]]
+transform = Transform3D(1, 0, 0, 0, 0.35908476, 0.93330497, 0, -0.93330497, 0.35908476, 0, 33.801556, -2.0394044e-07)
+current = true

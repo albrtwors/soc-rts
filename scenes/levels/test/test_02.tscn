@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://djj8q64l1kgxw"]
+
+[ext_resource type="PackedScene" uid="uid://chme0gb608hw5" path="res://scenes/maps/test/test_02.tscn" id="1_63bcg"]
+[ext_resource type="PackedScene" uid="uid://b2ob7yajdfsev" path="res://scenes/player/player.tscn" id="2_ffcgf"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_63bcg"]
+sky_top_color = Color(0.010685158, 0.010181468, 0.009404905, 1)
+sky_horizon_color = Color(0.48417324, 0.46811068, 0.4832886, 1)
+ground_bottom_color = Color(0.47182155, 0.408075, 0.4695633, 1)
+ground_horizon_color = Color(0.48417324, 0.46811068, 0.4832886, 1)
+energy_multiplier = 2.0
+
+[sub_resource type="Sky" id="Sky_ffcgf"]
+sky_material = SubResource("ProceduralSkyMaterial_63bcg")
+
+[sub_resource type="Environment" id="Environment_mij27"]
+background_mode = 2
+sky = SubResource("Sky_ffcgf")
+ssao_enabled = true
+volumetric_fog_density = 0.0
+volumetric_fog_length = 65.15
+
+[node name="Test02" type="Node3D" unique_id=1101025159]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=695702849]
+transform = Transform3D(-0.1976573, -0.98027116, -4.2849013e-08, 0, -4.371139e-08, 1, -0.98027116, 0.1976573, 8.6398755e-09, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=462774438]
+environment = SubResource("Environment_mij27")
+
+[node name="Map" type="Node3D" parent="." unique_id=28840035]
+
+[node name="map1" parent="Map" unique_id=296280824 instance=ExtResource("1_63bcg")]
+
+[node name="Player" parent="." unique_id=1002844316 instance=ExtResource("2_ffcgf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.563965, 0)

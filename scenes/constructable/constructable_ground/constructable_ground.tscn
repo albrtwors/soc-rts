@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b158lv7f35ao"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f56mw"]
+size = Vector3(16.415588, 1, 9.77533)
+
+[node name="ConstructableGround" type="Node3D" unique_id=312388994]
+
+[node name="ConstructableBody" type="StaticBody3D" parent="." unique_id=592447059 groups=["ConstructableGround"]]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConstructableBody" unique_id=1606320722 groups=["ConstructableGround"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.879242, 0, -1.3370056)
+shape = SubResource("BoxShape3D_f56mw")

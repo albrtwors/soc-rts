@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://cb4441pcobg3v"]
+
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="1_06jsw"]
+
+[resource]
+default_font = ExtResource("1_06jsw")
+default_font_size = 30

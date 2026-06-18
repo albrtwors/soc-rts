@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dxrch73bpxcoj"]
+
+[ext_resource type="Texture2D" uid="uid://d247g1den51wx" path="res://assets/textures/hardware/server_carpet/server_carpet.png" id="1_cd1di"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_54tai"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qkma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnwwo"]
+albedo_texture = ExtResource("1_cd1di")
+uv1_scale = Vector3(8, 8, 8)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_54tai"]
+
+[node name="ConstructableZone_Room1" type="Node3D" unique_id=600997000]
+
+[node name="ConstructableBody" type="StaticBody3D" parent="." unique_id=279043667 groups=["ConstructableGround"]]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConstructableBody" unique_id=353371146]
+transform = Transform3D(16, 0, 0, 0, 0.2, 0, 0, 0, 16, 0, 0, 0)
+shape = SubResource("BoxShape3D_54tai")
+debug_color = Color(0.7081086, 0.2669016, 1, 0.41960785)
+
+[node name="ConstructableMesh" type="MeshInstance3D" parent="." unique_id=1818178672]
+transform = Transform3D(16, 0, 0, 0, 0.2, 0, 0, 0, 16, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_8qkma")
+material_overlay = SubResource("StandardMaterial3D_vnwwo")
+mesh = SubResource("BoxMesh_54tai")

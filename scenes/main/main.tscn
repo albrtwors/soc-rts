@@ -1,0 +1,352 @@
+[gd_scene format=3 uid="uid://k22gygoiy3bk"]
+
+[ext_resource type="Script" uid="uid://clrlis3lhd7mt" path="res://scripts/main/game_component/game_component.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://dfra0dxg2d84" path="res://scripts/main/main.gd" id="1_iuonh"]
+[ext_resource type="Script" uid="uid://brt4gk1cdb51b" path="res://scripts/ui/start_menu_component/start_menu_component.gd" id="3_l3cfh"]
+[ext_resource type="PackedScene" uid="uid://djj8q64l1kgxw" path="res://scenes/levels/test/test_02.tscn" id="3_yyfjg"]
+[ext_resource type="Script" uid="uid://x72hao2ny24i" path="res://scripts/ui/pause_menu_component/pause_menu_component.gd" id="4_6q06x"]
+[ext_resource type="Script" uid="uid://cdehn8nuhun2i" path="res://scripts/building_manager/building_manager.gd" id="4_blune"]
+[ext_resource type="Theme" uid="uid://cb4441pcobg3v" path="res://tres/fonts/main_font.tres" id="4_ow5a4"]
+[ext_resource type="PackedScene" uid="uid://g45tabawybw3" path="res://scenes/hardware/server_rack/server_rack_preview/server_rack_preview.tscn" id="5_7smn1"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="5_hujxm"]
+[ext_resource type="Texture2D" uid="uid://cpbxanfdjbwds" path="res://assets/ui/menu_background/main.png" id="5_yyfjg"]
+[ext_resource type="PackedScene" uid="uid://d1aihcqwhtf4g" path="res://scenes/hardware/server_rack/server_rack_preview_error/server_rack_preview_error.tscn" id="6_hxu8e"]
+[ext_resource type="PackedScene" uid="uid://k6r5b5w8eu1r" path="res://scenes/hardware/server_rack/server_rack.tscn" id="6_raeie"]
+[ext_resource type="Texture2D" uid="uid://ctfsb414ft8e4" path="res://assets/ui/creation_menu_background/creation_menu.png" id="8_b1x3f"]
+[ext_resource type="Script" uid="uid://l0yq2jvbamtg" path="res://scripts/main/tutorial_component/tutorial_component.gd" id="8_hxu8e"]
+[ext_resource type="Texture2D" uid="uid://bbbhtpmbyaeqv" path="res://assets/ui/pfp_placeholder/Screenshot From 2026-06-17 20-48-51.png" id="10_ouso4"]
+[ext_resource type="Script" uid="uid://c5uaeuuyux50s" path="res://scripts/ui/character_creation_component/character_creation_component.gd" id="12_raeie"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8run"]
+bg_color = Color(0, 0, 0, 0.40784314)
+border_width_right = 1
+border_color = Color(0.08956743, 0.31525236, 0.39480937, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0.21176471, 0.6313726, 0.7882353, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_raeie"]
+font = ExtResource("5_hujxm")
+font_size = 26
+font_color = Color(0.14509805, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_a8run"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hxu8e"]
+font = ExtResource("5_hujxm")
+font_size = 26
+font_color = Color(0.14509805, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvumn"]
+font = ExtResource("5_hujxm")
+font_size = 26
+font_color = Color(0.14509805, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ou6is"]
+font = ExtResource("5_hujxm")
+font_size = 26
+font_color = Color(0.14509805, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7smn1"]
+font = ExtResource("5_hujxm")
+font_color = Color(0.14509805, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ouso4"]
+font = ExtResource("5_hujxm")
+font_size = 23
+
+[node name="Main" type="Node" unique_id=139952147 groups=["MainController"]]
+script = ExtResource("1_iuonh")
+
+[node name="GameComponent" type="Node" parent="." unique_id=121483436]
+script = ExtResource("1_hyk8p")
+default_level_scene = ExtResource("3_yyfjg")
+
+[node name="BuildingManager" type="Node3D" parent="GameComponent" unique_id=58853136]
+script = ExtResource("4_blune")
+server_preview_scene = ExtResource("5_7smn1")
+server_error_scene = ExtResource("6_hxu8e")
+server_real_scene = ExtResource("6_raeie")
+
+[node name="TutorialComponent" type="Node" parent="GameComponent" unique_id=591584217]
+script = ExtResource("8_hxu8e")
+
+[node name="LevelContainer" type="Node3D" parent="." unique_id=1856478835]
+
+[node name="UI_Canvas" type="Control" parent="." unique_id=1060271462]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StartMenuComponent" type="Control" parent="UI_Canvas" unique_id=51426557 node_paths=PackedStringArray("btn_new_game", "btn_load_game", "btn_exit")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_l3cfh")
+btn_new_game = NodePath("ButtonsContainer/Start")
+btn_load_game = NodePath("ButtonsContainer/Load")
+btn_exit = NodePath("ButtonsContainer/Options")
+
+[node name="StartMenuBackground" type="TextureRect" parent="UI_Canvas/StartMenuComponent" unique_id=2013503114]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = 1.0
+offset_right = 161.0
+offset_bottom = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.88, 0.88)
+mouse_filter = 2
+texture = ExtResource("5_yyfjg")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI_Canvas/StartMenuComponent" unique_id=68265452]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -321.0
+offset_top = -74.0
+offset_right = -98.0
+offset_bottom = 75.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="Start" type="Button" parent="UI_Canvas/StartMenuComponent/ButtonsContainer" unique_id=1841038341]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Nuevo Juego"
+
+[node name="Load" type="Button" parent="UI_Canvas/StartMenuComponent/ButtonsContainer" unique_id=638672876]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Cargar Partida"
+
+[node name="Options" type="Button" parent="UI_Canvas/StartMenuComponent/ButtonsContainer" unique_id=776452572]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Salir"
+
+[node name="CharacterCreationComponent" type="Control" parent="UI_Canvas" unique_id=1452442443]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("12_raeie")
+
+[node name="CreationMenuBackground" type="TextureRect" parent="UI_Canvas/CharacterCreationComponent" unique_id=1018338339]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -43.999992
+offset_top = -5.0
+offset_right = 212.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.88, 0.88)
+mouse_filter = 2
+texture = ExtResource("8_b1x3f")
+
+[node name="CustomizationBox" type="HBoxContainer" parent="UI_Canvas/CharacterCreationComponent" unique_id=968822034]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = -213.0
+offset_right = 213.0
+offset_bottom = 87.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="UserInfoPanel" type="Panel" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox" unique_id=1843262588]
+custom_minimum_size = Vector2(220, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8run")
+
+[node name="UserInfoRow" type="VBoxContainer" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel" unique_id=94352194]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -138.0
+offset_right = 81.0
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=1985106347]
+layout_mode = 2
+text = "Nombre"
+label_settings = SubResource("LabelSettings_raeie")
+
+[node name="NameLIne" type="LineEdit" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=1896123015]
+layout_mode = 2
+theme = SubResource("Theme_a8run")
+
+[node name="SurnameLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=203114172]
+layout_mode = 2
+text = "Apellido"
+label_settings = SubResource("LabelSettings_hxu8e")
+
+[node name="SurnameLine" type="LineEdit" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=2144394938]
+layout_mode = 2
+
+[node name="AgeLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=662409930]
+layout_mode = 2
+text = "Edad"
+label_settings = SubResource("LabelSettings_nvumn")
+
+[node name="AgeLine" type="SpinBox" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=68452396]
+layout_mode = 2
+
+[node name="RoleLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=49007222]
+layout_mode = 2
+text = "Rol"
+label_settings = SubResource("LabelSettings_ou6is")
+
+[node name="OptionButton" type="OptionButton" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=2013260969]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Novato"
+popup/item_0/id = 0
+popup/item_1/text = "Estudiante"
+popup/item_1/id = 1
+popup/item_2/text = "Ciberexperto"
+popup/item_2/id = 2
+
+[node name="PlayerPfpPanel" type="Panel" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox" unique_id=2051510778]
+custom_minimum_size = Vector2(200, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8run")
+
+[node name="PlayerPfpRow" type="VBoxContainer" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel" unique_id=1470483160]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 187.0
+offset_bottom = 185.0
+
+[node name="PfpLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel/PlayerPfpRow" unique_id=2058197815]
+layout_mode = 2
+text = "Foto del jugador"
+label_settings = SubResource("LabelSettings_7smn1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel/PlayerPfpRow" unique_id=136335364]
+layout_mode = 2
+alignment = 1
+
+[node name="Pfp" type="TextureRect" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel/PlayerPfpRow/HBoxContainer" unique_id=352631915]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+texture = ExtResource("10_ouso4")
+
+[node name="FileDialog" type="FileDialog" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel/PlayerPfpRow" unique_id=1158270005]
+oversampling_override = 1.0
+position = Vector2i(0, 36)
+
+[node name="UploadFileButton" type="Button" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/PlayerPfpPanel/PlayerPfpRow" unique_id=925922240]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Subir Archivo"
+
+[node name="TitleLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent" unique_id=965256414]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -119.0
+offset_top = 8.0
+offset_right = 108.0
+offset_bottom = 38.0
+grow_horizontal = 2
+text = "CREA TU PERSONAJE"
+label_settings = SubResource("LabelSettings_ouso4")
+
+[node name="ContinueButton" type="Button" parent="UI_Canvas/CharacterCreationComponent" unique_id=761425428]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 517.0
+offset_right = 652.0
+offset_bottom = 557.0
+theme_override_fonts/font = ExtResource("5_hujxm")
+theme_override_font_sizes/font_size = 24
+text = "Continuar"
+
+[node name="PauseMenuComponent" type="Control" parent="UI_Canvas" unique_id=569133660 node_paths=PackedStringArray("btn_resume", "btn_save", "btn_exit_to_menu")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_6q06x")
+btn_resume = NodePath("ButtonsContainer/Resume")
+btn_save = NodePath("ButtonsContainer/Save")
+btn_exit_to_menu = NodePath("ButtonsContainer/Exit")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI_Canvas/PauseMenuComponent" unique_id=903771721]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -74.0
+offset_right = -17.0
+offset_bottom = 75.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=610434636]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Continuar"
+
+[node name="Save" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=88434292]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Guardar"
+
+[node name="Exit" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=107238645]
+layout_mode = 2
+theme = ExtResource("4_ow5a4")
+theme_override_fonts/font = ExtResource("5_hujxm")
+text = "Salir"

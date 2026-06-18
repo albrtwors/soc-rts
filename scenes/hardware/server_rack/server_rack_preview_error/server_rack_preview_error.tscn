@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://d1aihcqwhtf4g"]
+
+[ext_resource type="PackedScene" uid="uid://g45tabawybw3" path="res://scenes/hardware/server_rack/server_rack_preview/server_rack_preview.tscn" id="1_i4xxa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i4xxa"]
+transparency = 1
+albedo_color = Color(0.827451, 0, 0, 0.3764706)
+
+[node name="Server_Rack" unique_id=16153085 instance=ExtResource("1_i4xxa")]
+
+[node name="defaultMaterial" parent="Sketchfab_model/Collada visual scene group/Server_lp" parent_id_path=PackedInt32Array(13102276) index="0" unique_id=998805621]
+material_override = SubResource("StandardMaterial3D_i4xxa")

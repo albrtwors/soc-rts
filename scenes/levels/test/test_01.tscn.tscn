@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c14gpbbp1gfbj"]
+
+[ext_resource type="PackedScene" uid="uid://bfne60qmk1g2f" path="res://scenes/maps/test/test_01.tscn" id="1_48rmr"]
+[ext_resource type="PackedScene" uid="uid://b2ob7yajdfsev" path="res://scenes/player/player.tscn" id="2_aybr7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_48rmr"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_aybr7"]
+sky_material = SubResource("ProceduralSkyMaterial_48rmr")
+
+[sub_resource type="Environment" id="Environment_r53d2"]
+background_mode = 2
+sky = SubResource("Sky_aybr7")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Test01_tscn" type="Node3D" unique_id=879309519]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=735209106]
+environment = SubResource("Environment_r53d2")
+
+[node name="Node3D" parent="." unique_id=2133595653 instance=ExtResource("1_48rmr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 163.38007)
+
+[node name="Player" parent="." unique_id=1002844316 instance=ExtResource("2_aybr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.291115, 0)

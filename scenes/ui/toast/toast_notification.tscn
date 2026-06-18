@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://beoaxo1ai12jf"]
+
+[ext_resource type="Script" uid="uid://dc8i7fg68jr1d" path="res://scripts/ui/toast_notification/toast_notification.gd" id="1_afs8t"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_afs8t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_88fjn"]
+font = ExtResource("2_afs8t")
+font_size = 24
+font_color = Color(0.14509805, 1, 1, 1)
+
+[node name="ToastNotification" type="PanelContainer" unique_id=907622825]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_afs8t")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1136649169]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1269741869]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1912641531]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_88fjn")
+autowrap_mode = 3

@@ -1,0 +1,46 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Security Operations Center (RTS)"
+run/main_scene="uid://k22gygoiy3bk"
+config/features=PackedStringArray("4.6", "Forward Plus")
+config/icon="uid://c52krbl7xqrhp"
+config/macos_native_icon="uid://c52krbl7xqrhp"
+config/windows_native_icon="uid://c52krbl7xqrhp"
+
+[autoload]
+
+DataManager="*uid://dd355wsglkt3"
+ToastManager="*uid://cfrlxv0s6675u"
+EventBus="*uid://d37p5tyqadei7"
+
+[display]
+
+window/size/mode=2
+window/stretch/mode="viewport"
+
+[filesystem]
+
+import/blender/enabled=false
+
+[layer_names]
+
+3d_physics/layer_1="ground"
+3d_physics/layer_2="constructionss"
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+rendering_device/driver.windows="d3d12"
