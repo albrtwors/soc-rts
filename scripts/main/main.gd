@@ -6,9 +6,12 @@ class_name MainController
 @onready var start_menu: StartMenuComponent = $UI_Canvas/StartMenuComponent
 @onready var character_creation: CharacterCreationComponent = $UI_Canvas/CharacterCreationComponent
 @onready var pause_menu: PauseMenuComponent = $UI_Canvas/PauseMenuComponent
-
-# 🛠️ El tutorial ahora es manejado exclusivamente por el flujo principal de control
+@onready var ui_canvas: Control = $UI_Canvas
+@onready var shop_component: ShopComponent = $GameComponent/ShopComponent
 @onready var tutorial_component: TutorialComponent = $GameComponent/TutorialComponent
+
+# ⚡ NUEVO: Referencia directa a la pantalla de carga en tu Canvas
+@onready var loading_screen: LoadingScreenComponent = $UI_Canvas/LoadingScreen
 
 var is_game_running: bool = false
 
@@ -20,6 +23,8 @@ func _ready() -> void:
 	if character_creation:
 		character_creation.profile_created.connect(_on_player_profile_created)
 	
+	await get_tree().create_timer(0.5).timeout
+	
 	pause_menu.resume_game.connect(_on_resume_game)
 	pause_menu.save_game.connect(_on_save_game)
 	
@@ -27,6 +32,8 @@ func _ready() -> void:
 	if character_creation: 
 		character_creation.visible = false
 	pause_menu.visible = false
+	if loading_screen:
+		loading_screen.visible = false
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and is_game_running:
@@ -37,53 +44,79 @@ func _on_start_new_game() -> void:
 	if character_creation:
 		character_creation.visible = true
 	else:
-		is_game_running = true
-		game_component.initialize_new_game(level_container)
+		_trigger_game_load_flow(true) # Flujo directo sin perfil
 
-func _on_player_profile_created(p_name: String, p_lastname: String, p_age: int, p_role: String, p_avatar_path: String) -> void:
+func _on_player_profile_created(p_name: String, p_lastname: String, p_age: int, p_role: String, p_avatar_path: String, p_pnf: String) -> void:
 	if character_creation: 
 		character_creation.visible = false
 	
-	is_game_running = true
-	
-	# 1. El nivel 3D se instancia (Independiente)
-	game_component.initialize_new_game(level_container)
-	
-	# 2. Inyectamos los datos del formulario a la RAM
-	DataManager.current_save.player_name = p_name
-	DataManager.current_save.player_lastname = p_lastname
-	DataManager.current_save.player_age = p_age
-	DataManager.current_save.player_role = p_role
-	DataManager.current_save.player_avatar_path = p_avatar_path
-	
-	# 3. Buscamos y actualizamos la interfaz del jugador 
-	_update_player_ui()
-	
-	# 4. 🛠️ DISPARO DEL TUTORIAL: Como es una partida totalmente nueva, le damos Play aquí mismo
-	if tutorial_component:
-		tutorial_component.start_new_player_tutorial()
-	
-	# 5. Guardamos en el disco duro (.tres)
-	game_component.save_game()
-	
-	ToastManager.show_toast("Administrador registrado con éxito", "MITIGACION")
+	# ⚡ CAMBIO CRÍTICO: Primero disparamos el flujo de carga.
+	# Esto llamará a initialize_new_game() que reseteará el save a limpio.
+	# Le pasamos los datos del formulario como argumentos para meterlos en el momento preciso.
+	_trigger_game_load_flow(true, p_name, p_lastname, p_age, p_role, p_avatar_path, p_pnf)
 
 func _on_load_saved_game() -> void:
 	if game_component.has_save_file():
 		start_menu.visible = false
 		if character_creation: 
 			character_creation.visible = false
-		is_game_running = true
-		
-		# Carga el nivel desde el disco
-		game_component.load_game(level_container)
-		
-		# Buscamos la UI y reflejamos los datos
-		_update_player_ui()
-		
-		# 🛠️ Al cargar una partida del disco, NO llamamos al tutorial, garantizando que permanezca apagado.
+			
+		# ⚡ Entramos al flujo unificado de carga (es una partida vieja del disco)
+		_trigger_game_load_flow(false)
 	else:
 		print("Operación cancelada: No existen datos de guardado previos.")
+
+## 🔄 FLUJO UNIFICADO DE CARGA ASÍNCRONA/PROCESAL
+## 🔄 FLUJO UNIFICADO DE CARGA ASÍNCRONA/PROCESAL
+## 🔄 FLUJO UNIFICADO DE CARGA ASÍNCRONA/PROCESAL
+func _trigger_game_load_flow(is_new_game: bool, p_name: String = "", p_lastname: String = "", p_age: int = 0, p_role: String = "", p_avatar_path: String = "", p_pnf: String = "") -> void:
+	if loading_screen:
+		loading_screen.start_loading()
+	
+	await get_tree().process_frame
+	await get_tree().process_frame
+	
+	# --- PASO 1: Procesar la carga física (Aquí create_new_game() resetea la RAM) ---
+	if is_new_game:
+		game_component.initialize_new_game(level_container)
+		if tutorial_component:
+			tutorial_component.start_new_player_tutorial()
+	else:
+		game_component.load_game(level_container)
+	
+	# --- ⚡ PASO 1.5: INYECCIÓN SEGURA DE DATOS ---
+	# Ahora que la RAM está limpia y el nivel montado, le clavamos los datos reales antes de actualizar la UI
+	if is_new_game:
+		DataManager.current_save.player_name = p_name
+		DataManager.current_save.player_lastname = p_lastname
+		DataManager.current_save.player_age = p_age
+		DataManager.current_save.player_role = p_role
+		DataManager.current_save.player_avatar_path = p_avatar_path
+		DataManager.current_save.player_pnf = p_pnf
+	
+	# Esperamos a que los nodos del nivel se acoplen bien
+	await get_tree().process_frame
+	
+	# --- PASO 2: Refrescar la interfaz (Ahora sí leerá los datos reales inyectados) ---
+	_update_player_ui()
+	
+	# --- PASO 3: Guardado inicial silencioso con los datos del formulario ya fijados ---
+	if is_new_game:
+		game_component.save_game(false)
+	
+	# --- PASO 4: Sostenemos la pantalla por 3 segundos para leer los tips del SOC ---
+	await get_tree().create_timer(3.0).timeout
+	
+	# --- PASO 5: Levantamos la cortina y liberamos la jugabilidad ---
+	is_game_running = true
+	if loading_screen:
+		loading_screen.stop_loading()
+		
+	# ⚡ PASO 6: Mensajes finales
+	if is_new_game:
+		ToastManager.show_toast("Administrador registrado con éxito", "MITIGACION")
+	else:
+		ToastManager.show_toast("Infraestructura del SOC cargada correctamente", "INFO")
 
 func _update_player_ui() -> void:
 	var player_ui = get_tree().get_first_node_in_group("player_ui") as UIComponent

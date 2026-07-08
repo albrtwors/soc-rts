@@ -2,7 +2,6 @@ extends Node3D
 class_name Player
 
 @export var camera: Camera3D
-
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var ui_component: UIComponent = $UI_Canvas/UIComponent
 

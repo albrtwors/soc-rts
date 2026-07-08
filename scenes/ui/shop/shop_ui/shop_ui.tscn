@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cfgbkig6gf5g0"]
+
+[ext_resource type="Script" uid="uid://bbwog7yrtx0si" path="res://scripts/ui/shop_ui/shop_ui_2.gd" id="1_viyao"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_ay38m"]
+
+[node name="ShopUI" type="PanelContainer" unique_id=731318927]
+offset_right = 600.0
+offset_bottom = 400.0
+script = ExtResource("1_viyao")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1031153065]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1664525319]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=2035773703]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ay38m")
+theme_override_font_sizes/font_size = 22
+text = "Tienda"
+horizontal_alignment = 1
+
+[node name="PagingTabs" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1806081995]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Button_Servidores" type="Button" parent="MarginContainer/VBoxContainer/PagingTabs" unique_id=1966785631]
+layout_mode = 2
+text = "Servidores"
+
+[node name="Button_Firewalls" type="Button" parent="MarginContainer/VBoxContainer/PagingTabs" unique_id=187850492]
+layout_mode = 2
+text = "Firewalls"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=2101135078]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=331864469]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=279520323]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=1033159053]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=70199304]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ay38m")
+text = "Cerrar"

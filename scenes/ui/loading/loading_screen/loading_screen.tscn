@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://d26q3rn35pjrc"]
+
+[ext_resource type="Script" uid="uid://dvarmecjesdb" path="res://scripts/ui/loading_screen/loading_screen.gd" id="1_fipbf"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_e6vfx"]
+
+[node name="LoadingScreen" type="Control" unique_id=405736739]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fipbf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=584750101]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LoadingLabel" type="Label" parent="." unique_id=192403853]
+layout_mode = 0
+offset_left = 940.0
+offset_top = 485.0
+offset_right = 1092.0
+offset_bottom = 532.0
+theme_override_fonts/font = ExtResource("2_e6vfx")
+theme_override_font_sizes/font_size = 36
+text = "Cargando"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="TipsLabel" type="Label" parent="." unique_id=941457798]
+layout_mode = 0
+offset_left = -66.0
+offset_top = 541.0
+offset_right = 1092.0
+offset_bottom = 562.0
+theme_override_colors/font_color = Color(0, 0.58829033, 0.95411724, 1)
+theme_override_fonts/font = ExtResource("2_e6vfx")
+text = "asdasdadsadsasdasdadasdasdasdasdasdadssadasdasdasdasdasd"
+horizontal_alignment = 2
+autowrap_mode = 2

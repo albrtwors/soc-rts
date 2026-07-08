@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialLessonResource" format=3 uid="uid://brlkssf0uqosd"]
+
+[ext_resource type="Script" uid="uid://b8dvbtcyhjw4m" path="res://scripts/resources/tutorial/tutorial_lesson_resource/TutorialLessonResource.gd" id="1_stuuf"]
+
+[resource]
+script = ExtResource("1_stuuf")
+lesson_id = "les1"
+lesson_name = "Movimiento"
+pages = Array[Dictionary]([{}, {}])
+metadata/_custom_type_script = "uid://b8dvbtcyhjw4m"

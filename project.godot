@@ -22,6 +22,8 @@ config/windows_native_icon="uid://c52krbl7xqrhp"
 DataManager="*uid://dd355wsglkt3"
 ToastManager="*uid://cfrlxv0s6675u"
 EventBus="*uid://d37p5tyqadei7"
+ModalManager="*uid://doebsrbw0t5h3"
+TutorialDatabase="*uid://cn6dxxoul0l2h"
 
 [display]
 

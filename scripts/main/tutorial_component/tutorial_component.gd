@@ -4,32 +4,33 @@ class_name TutorialComponent
 var is_active: bool = false
 var current_step: int = 0
 
-## El MainController llamará a esto únicamente cuando se inicie una partida NUEVA de verdad
+func _ready() -> void:
+	if has_node("/root/EventBus"):
+		EventBus.tutorial_step_advanced.connect(_on_tutorial_step_advanced)
+
+## 🚀 Llamado por el MainController cuando la partida es 100% nueva
 func start_new_player_tutorial() -> void:
-	# Verificación de seguridad usando los datos en memoria
+	# Si ya lo completó en otra sesión, no hacemos nada
 	if DataManager.current_save.is_tutorial_completed:
 		return
 		
 	is_active = true
-	current_step = 1
-	_execute_step()
+	EventBus.is_in_tutorial = true
+	
+	# DISPARO: Emitimos la señal global para que el popup se despierte solo
+	if has_node("/root/EventBus"):
+		EventBus.start_tutorial.emit()
+		print("TutorialComponent: Señal start_tutorial emitida al EventBus.")
 
-func _execute_step() -> void:
-	match current_step:
-		1:
-			ToastManager.show_toast("Bienvenido. Arrastra el mouse con click izquierdo para moverte por el mapa.", "INFO", 10)
-		2:
-			ToastManager.show_toast("Intenta Comprar tu primer servidor", "WARNING")
-		3:
-			_complete_tutorial()
-
-## El sistema o eventos externos pueden avisar de un avance sin acoplarse
-func advance_step() -> void:
+func _on_tutorial_step_advanced() -> void:
 	if not is_active: return
-	current_step += 1
-	_execute_step()
+	
+	# Aquí puedes meter lógica de backend o desbloquear lecciones en el futuro
+	print("TutorialComponent: El jugador avanzó un paso técnico en el mapa 3D.")
 
-func _complete_tutorial() -> void:
+## 🎯 Se llamará cuando el jugador complete todo o cierre el menú definitivamente
+func complete_tutorial() -> void:
 	is_active = false
+	EventBus.is_in_tutorial = false
 	DataManager.current_save.is_tutorial_completed = true
-	ToastManager.show_toast("Inducción completada. El laboratorio está bajo tu control.", "MITIGACION")
+	print("TutorialComponent: Tutorial marcado como completado con éxito.")

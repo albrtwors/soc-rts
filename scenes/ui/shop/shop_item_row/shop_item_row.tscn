@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dwak2fx0giibn"]
+
+[ext_resource type="Script" uid="uid://d2wf2qprxu1wh" path="res://scripts/ui/shop_item_row/shop_item_row.gd" id="1_c2jwx"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_4bjn3"]
+
+[node name="ShopItemRow" type="PanelContainer" unique_id=2123277899]
+script = ExtResource("1_c2jwx")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=167175154]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=456166636]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="IconTextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=713231680]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+expand_mode = 2
+
+[node name="TextContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1360152637]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/TextContainer" unique_id=713812678]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.03137255, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_4bjn3")
+text = "asdad"
+
+[node name="StatsLabel" type="Label" parent="MarginContainer/HBoxContainer/TextContainer" unique_id=2031456679]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4bjn3")
+theme_override_font_sizes/font_size = 12
+text = "asd"
+
+[node name="DescLabel" type="Label" parent="MarginContainer/HBoxContainer/TextContainer" unique_id=1968683960]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4bjn3")
+theme_override_font_sizes/font_size = 12
+text = "sd"
+
+[node name="ActionContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=818173129]
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="MarginContainer/HBoxContainer/ActionContainer" unique_id=1453878311]
+layout_mode = 2
+text = "Buy"

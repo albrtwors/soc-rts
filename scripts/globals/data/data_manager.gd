@@ -2,47 +2,58 @@ extends Node
 # 🌍 AUTOLOAD GLOBAL: Guarda el estado de la partida en la RAM
 
 const SAVE_PATH = "user://soc_save_game.tres"
-
-# Aquí vive la información en tiempo real a la que todos accederán
 var current_save: SaveData
 
 func _ready() -> void:
-	# El Autoload procesa siempre
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	# Inicializamos con un recurso vacío por si acaso
-	current_save = SaveData.new()
+	# Si no existe archivo previo, instanciamos una plantilla limpia
+	if not load_from_disk():
+		current_save = SaveData.new()
 
-## Crea un espacio de memoria limpio para una partida nueva
 func create_new_game() -> void:
 	current_save = SaveData.new()
-	print("¡Datos globales reseteados para nueva partida!")
+	# Nos aseguramos de que el array empiece completamente vacío de candados
+	current_save.completed_lessons = []
+	print("¡Datos globales y progreso de tutoriales reseteados para nueva partida!")
 
-## Guarda el estado actual de la RAM en el disco duro (.tres)
 func save_to_disk() -> void:
 	if not current_save: return
 	
-	# Buscamos al Player vivo en la escena
 	var player = get_tree().get_first_node_in_group("Player") as Player
 	if player:
-		# 1. Guardamos su posición física real en el recurso
 		current_save.player_position = player.global_position
-		
-		# 2. 🔴 CORRECCIÓN CRÍTICA: Forzamos al componente de movimiento a quedarse quieto
-		# Evita que el target_position se quede apuntando a otro lado tras el guardado
 		if player.movement_component:
 			player.movement_component.target_position = player.global_position
 			player.movement_component.is_moving_to_target = false
-		
+			
+	# Recolectamos las estructuras instaladas en el SOC
+	var serialized_infrastructure = {}
+	var installed_items = get_tree().get_nodes_in_group("InfraestructuraInstalada")
+	
+	for item in installed_items:
+		if item is PlacedStructure:
+			var grid_key = str(round(item.global_position.x)) + "," + str(round(item.global_position.z))
+			
+			serialized_infrastructure[grid_key] = {
+				"category": item.category,
+				"subcategory": item.subcategory,
+				"pos_x": item.global_position.x,
+				"pos_y": item.global_position.y,
+				"pos_z": item.global_position.z
+			}
+			
+	current_save.servers = serialized_infrastructure
+	
+	# Al guardar el recurso, Godot meterá automáticamente completed_lessons gracias al @export
 	var error := ResourceSaver.save(current_save, SAVE_PATH)
 	if error == OK:
-		print("¡Respaldo de datos exitoso en user:// sin desplazamientos!")
+		print("¡Respaldo de datos, infraestructura y tutoriales exitoso en user://!")
 	else:
-		print("Error crítico al guardar: ", error)
+		print("Error crítico al guardar en disco: ", error)
 
-## Carga el archivo del disco y lo pasa a la RAM del Autoload
 func load_from_disk() -> bool:
 	if ResourceLoader.exists(SAVE_PATH):
 		current_save = ResourceLoader.load(SAVE_PATH) as SaveData
-		print("¡Datos cargados! Capital disponible: ", current_save.money)
+		print("¡Datos cargados del disco! Lecciones completadas detectadas: ", current_save.completed_lessons.size())
 		return true
 	return false

@@ -9,6 +9,7 @@ font_size = 24
 font_color = Color(0.14509805, 1, 1, 1)
 
 [node name="ToastNotification" type="PanelContainer" unique_id=907622825]
+z_index = 4096
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_afs8t")

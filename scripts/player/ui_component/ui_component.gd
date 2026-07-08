@@ -8,6 +8,10 @@ var player_root: Node3D
 @onready var role_label: Label = $"PlayerCard/Role Label"
 @onready var player_pfp: TextureRect = $PlayerCard/PlayerPFP
 @onready var time_label: Label = $"Date&HourCard/Name Label"
+@onready var money_label: Label = $PnfAndMoney/Money
+@onready var pnf_label: Label = $PnfAndMoney/Pnf
+@onready var shop_button: Button = $ShopButton
+@onready var destruction_button: Button = $DestructionButton
 func setup(p_root: Node3D) -> void:
 	player_root = p_root
 
@@ -15,10 +19,19 @@ func _ready() -> void:
 	# Nos aseguramos por código de que la raíz nunca bloquee los clicks del mapa 3D
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
+	var shop_component = get_tree().get_first_node_in_group("shop_component") as ShopComponent
+	
+	if shop_component:
+		shop_button.pressed.connect(func(): shop_component.toggle_shop())
+		
+	destruction_button.pressed.connect(func(): EventBus.start_demolition_mode.emit())
+	
 	# ⚡ Cargamos los datos del perfil guardados en la RAM al iniciar el juego
 	_initialize_player_profile()
 func _process(_delta: float) -> void:
 	_update_live_clock()
+	pnf_label.text="PNF: " + str(DataManager.current_save.player_pnf)
+	money_label.text="DINERO: " + str(DataManager.current_save.money)
 
 ## 🕒 Captura la hora y fecha del sistema y la estampa en la interfaz
 func _update_live_clock() -> void:

@@ -17,6 +17,61 @@ font = ExtResource("5_p47bc")
 font_size = 39
 font_color = Color(0.14509805, 1, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_qek5x"]
+font = ExtResource("5_p47bc")
+font_size = 56
+font_color = Color(0.3400926, 1, 0.24688074, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gtgg"]
+bg_color = Color(0.014474017, 0.116117515, 0.2401002, 0.69411767)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.9075921, 0.9506156, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0owmy"]
+bg_color = Color(0, 0, 0.00038300388, 0.69411767)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.9075921, 0.9506156, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qek5x"]
+bg_color = Color(0, 0, 0, 0.69411767)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.9075921, 0.9506156, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_qek5x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h17s1"]
+bg_color = Color(0, 0, 0.0003338868, 0.69411767)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.9075921, 0.9506156, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="Player" type="Node3D" unique_id=1002844316 node_paths=PackedStringArray("camera")]
 script = ExtResource("1_gmlin")
 camera = NodePath("Camera3D")
@@ -100,13 +155,65 @@ offset_bottom = 162.85107
 text = "23/06/2026 11:20 AM"
 label_settings = ExtResource("7_qek5x")
 
-[node name="ToastContainer" type="VBoxContainer" parent="UI_Canvas/UIComponent" unique_id=595662213 groups=["toast_container"]]
+[node name="PnfAndMoney" type="TextureRect" parent="UI_Canvas/UIComponent" unique_id=1209806950]
+custom_minimum_size = Vector2(200, 300)
 layout_mode = 0
-offset_left = 600.0
-offset_top = 547.0
-offset_right = 1125.0
-offset_bottom = 623.0
-mouse_filter = 2
+offset_left = 865.99994
+offset_top = 17.0
+offset_right = 1799.0
+offset_bottom = 317.0
+scale = Vector2(0.285, 0.285)
+texture = ExtResource("6_0owmy")
+
+[node name="Pnf" type="Label" parent="UI_Canvas/UIComponent/PnfAndMoney" unique_id=1178645133]
+layout_mode = 0
+offset_left = 59.574448
+offset_top = 80.85108
+offset_right = 304.57446
+offset_bottom = 162.85107
+text = "PNF: "
+label_settings = ExtResource("7_qek5x")
+
+[node name="Money" type="Label" parent="UI_Canvas/UIComponent/PnfAndMoney" unique_id=1096430514]
+layout_mode = 0
+offset_left = 59.64919
+offset_top = 168.42105
+offset_right = 304.6492
+offset_bottom = 250.42105
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "DINERO:"
+label_settings = SubResource("LabelSettings_qek5x")
+
+[node name="ShopButton" type="Button" parent="UI_Canvas/UIComponent" unique_id=1264007323]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 525.0
+offset_right = 97.0
+offset_bottom = 592.0
+scale = Vector2(1.415, 1.415)
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gtgg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0owmy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qek5x")
+text = "🛒"
+icon_alignment = 1
+expand_icon = true
+
+[node name="DestructionButton" type="Button" parent="UI_Canvas/UIComponent" unique_id=744071250]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 525.0
+offset_right = 208.0
+offset_bottom = 592.0
+scale = Vector2(1.415, 1.415)
+theme = SubResource("Theme_qek5x")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gtgg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_h17s1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0owmy")
+text = "🔨"
+icon_alignment = 1
+expand_icon = true
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1767391642 groups=["Camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.35908476, 0.93330497, 0, -0.93330497, 0.35908476, 0, 33.801556, -2.0394044e-07)

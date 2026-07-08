@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://6d3jhi8gn4wr"]
+
+[ext_resource type="Script" uid="uid://27pp5wty73pr" path="res://scripts/ui/tutorial_popup/tutorial_popup.gd" id="1_06v8a"]
+[ext_resource type="Texture2D" uid="uid://dmg6ew5nxa8s7" path="res://assets/ui/tutorial_images/1.png" id="1_fdnoe"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_tnhdi"]
+[ext_resource type="PackedScene" uid="uid://ll1414jt3wee" path="res://scenes/ui/game_menu_panel/game_menu_panel.tscn" id="4_mttti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06v8a"]
+bg_color = Color(0.22745098, 0.22745098, 0.22745098, 0.92941177)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1.347661e-06, 0.9124854, 0.9173358, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 15
+
+[sub_resource type="Theme" id="Theme_tnhdi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mttti"]
+font = ExtResource("2_tnhdi")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_ift2p"]
+font = ExtResource("2_tnhdi")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fdnoe"]
+
+[node name="TutorialPopup" type="PanelContainer" unique_id=1111874770 groups=["tutorial_popup"]]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -174.5
+offset_right = 280.0
+offset_bottom = 174.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.255, 1.255)
+pivot_offset = Vector2(291.028, 229.195)
+theme_override_styles/panel = SubResource("StyleBoxFlat_06v8a")
+script = ExtResource("1_06v8a")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1275894284]
+layout_mode = 2
+theme = SubResource("Theme_tnhdi")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=421960752]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="LeftSidebar" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=534031602]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftSidebar" unique_id=1469964687]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer" unique_id=559071751]
+custom_minimum_size = Vector2(223.52, 0)
+layout_mode = 2
+
+[node name="LessonListTitle" type="Label" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer" unique_id=22179233]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer" unique_id=1866204210]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="LessonButtonContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1089213777]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Lesson1Button" type="Button" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer/ScrollContainer/LessonButtonContainer" unique_id=55733251]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tnhdi")
+theme_override_font_sizes/font_size = 16
+text = "Tutorial 1"
+
+[node name="Lesson2Button" type="Button" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer/ScrollContainer/LessonButtonContainer" unique_id=464391467]
+layout_mode = 2
+
+[node name="Lesson3Button" type="Button" parent="MarginContainer/HBoxContainer/LeftSidebar/MarginContainer/VBoxContainer/ScrollContainer/LessonButtonContainer" unique_id=227829081]
+layout_mode = 2
+
+[node name="RightContentArea" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=2072085874]
+layout_mode = 2
+
+[node name="CarouselView" type="PanelContainer" parent="MarginContainer/HBoxContainer/RightContentArea" unique_id=687067696]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselView" unique_id=717039626]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselView/MarginContainer" unique_id=1721187183]
+layout_mode = 2
+
+[node name="LessonImage" type="TextureRect" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselView/MarginContainer/VBoxContainer" unique_id=858863962]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+texture = ExtResource("1_fdnoe")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LessonTitle" type="Label" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselView/MarginContainer/VBoxContainer" unique_id=1863681181]
+layout_mode = 2
+text = "Movimiento"
+label_settings = SubResource("LabelSettings_mttti")
+
+[node name="LessonDescription" type="Label" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselView/MarginContainer/VBoxContainer" unique_id=556049376]
+layout_mode = 2
+text = "Para moverte deberás"
+label_settings = SubResource("LabelSettings_ift2p")
+autowrap_mode = 3
+
+[node name="CarouselNavigation" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightContentArea" unique_id=1615963469]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="PrevPageButton" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation" unique_id=1738768877]
+layout_mode = 2
+text = "<"
+
+[node name="DotsContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation" unique_id=1749991229]
+layout_mode = 2
+
+[node name="Dot1" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation/DotsContainer" unique_id=381931554]
+layout_mode = 2
+text = "⚪"
+icon = SubResource("CanvasTexture_fdnoe")
+
+[node name="Dot2" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation/DotsContainer" unique_id=952822332]
+layout_mode = 2
+text = "⚪"
+
+[node name="Dot3" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation/DotsContainer" unique_id=1867940759]
+layout_mode = 2
+text = "⚪"
+
+[node name="NextPageButton" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/CarouselNavigation" unique_id=1006444428]
+layout_mode = 2
+text = ">"
+
+[node name="ActionPanel" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightContentArea" unique_id=535204387]
+visible = false
+layout_mode = 2
+
+[node name="ActionTitle" type="Label" parent="MarginContainer/HBoxContainer/RightContentArea/ActionPanel" unique_id=496072274]
+layout_mode = 2
+
+[node name="ObjectivesList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightContentArea/ActionPanel" unique_id=734089756]
+layout_mode = 2
+
+[node name="Objective1" type="CheckBox" parent="MarginContainer/HBoxContainer/RightContentArea/ActionPanel/ObjectivesList" unique_id=668777876]
+layout_mode = 2
+
+[node name="Objective2" type="CheckBox" parent="MarginContainer/HBoxContainer/RightContentArea/ActionPanel/ObjectivesList" unique_id=1626756698]
+layout_mode = 2
+
+[node name="StartMissionButton" type="Button" parent="MarginContainer/HBoxContainer/RightContentArea/ActionPanel" unique_id=88057689]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tnhdi")
+text = "Comenzar"
+
+[node name="GameMenuPanel" parent="MarginContainer/HBoxContainer/RightContentArea" unique_id=234218656 instance=ExtResource("4_mttti")]
+layout_mode = 2

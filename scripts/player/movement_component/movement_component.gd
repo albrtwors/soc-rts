@@ -6,8 +6,8 @@ class_name MovementComponent
 @export var collision_mask: int = 1
 
 @export_category("Configuración de Inercia / Drag")
-@export var drag_sensitivity: float = 0.15   ## Qué tan rápido responde al arrastre inicial
-@export_range(0.0, 1.0) var friction: float = 0.1 ## Qué tan rápido se frena (valores más bajos = más resbaladizo/más momentum)
+@export var drag_sensitivity: float = 0.15
+@export_range(0.0, 1.0) var friction: float = 0.1
 
 @export_category("Configuración de Zoom")
 @export var zoom_speed: float = 0.1       
@@ -23,7 +23,6 @@ var is_dragging: bool = false
 var click_start_position: Vector2
 var drag_threshold: float = 5.0
 
-# Variables para controlar el Momentum
 var _drag_velocity: Vector3 = Vector3.ZERO
 var _camera_initial_offset: Vector3
 var _current_zoom_factor: float = 1.0
@@ -35,21 +34,27 @@ func setup(p_root: Node3D, p_camera: Camera3D) -> void:
 	_camera_initial_offset = camera.position
 
 func _input(event: InputEvent) -> void:
-	# --- 1. DETECCIÓN DE ZOOM (Siempre disponible) ---
+	# 🛑 FILTRO CRÍTICO 1: Si el mouse está haciendo clic en un botón o elemento de interfaz,
+	# cancelamos el procesamiento para que la cámara no se mueva por debajo.
+	if get_viewport().gui_get_hovered_control() != null:
+		if event is InputEventMouseButton and not event.pressed:
+			is_dragging = false # Previene que el drag se quede pegado al soltar el clic sobre la UI
+		return
+
+	# 🛑 FILTRO CRÍTICO 2: Interruptor de seguridad para construcción o tutorial
+	if EventBus.is_building or EventBus.is_in_tutorial: 
+		is_dragging = false 
+		_drag_velocity = Vector3.ZERO 
+		# Permitimos el zoom incluso en modo construcción, quitando el return de aquí si deseas zoom siempre
+		if not (event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN)):
+			return
+
+	# --- 1. DETECCIÓN DE ZOOM ---
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			process_camera_zoom(-zoom_speed) 
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			process_camera_zoom(zoom_speed)  
-			
-	if event.is_action_pressed("ui_accept"):
-		EventBus.server_purchase_requested.emit()
-		
-	# 🔴 INTERRUPTOR DE SEGURIDAD
-	if EventBus.is_building: 
-		is_dragging = false 
-		_drag_velocity = Vector3.ZERO # Cancelamos la inercia si entra en modo construcción
-		return
 
 	# --- 2. CAPTURA DE CLICKS (ARRASTRE O VIAJE) ---
 	var mouse_button := event as InputEventMouseButton
@@ -57,7 +62,7 @@ func _input(event: InputEvent) -> void:
 		if mouse_button.pressed:
 			is_dragging = true
 			click_start_position = mouse_button.position
-			_drag_velocity = Vector3.ZERO # Detiene cualquier inercia previa al volver a hacer clic
+			_drag_velocity = Vector3.ZERO
 		else:
 			is_dragging = false
 			var click_dist := click_start_position.distance_to(mouse_button.position)
@@ -73,15 +78,12 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if not player_root: return
 	
-	# --- SISTEMA DE INERCIA (MOMENTUM) ---
 	if _drag_velocity.length() > 0.01:
 		player_root.global_translate(_drag_velocity * delta)
-		# Aplicamos la fricción usando lerp para desacelerar suavemente en cada frame
 		_drag_velocity = _drag_velocity.lerp(Vector3.ZERO, friction * 60.0 * delta)
 	else:
 		_drag_velocity = Vector3.ZERO
 		
-	# --- MOVIMIENTO POR CLICK ---
 	if is_moving_to_target:
 		var current_pos := player_root.global_position
 		var real_target := Vector3(target_position.x, current_pos.y, target_position.z)
@@ -91,14 +93,9 @@ func _process(delta: float) -> void:
 		if current_pos.distance_to(real_target) < 0.1:
 			is_moving_to_target = false
 
-## En lugar de mover directamente, inyectamos velocidad acumulada
 func calculate_drag_momentum(relative_motion: Vector2) -> void:
-	# Ajustamos el vector de movimiento según la orientación típica del plano en Tycoons
-	# Multiplicamos por la sensibilidad actual y el zoom para que el drag sea intuitivo
 	var speed_multiplier = drag_sensitivity * _current_zoom_factor
 	var target_velocity = Vector3(-relative_motion.x, 0, -relative_motion.y) * speed_multiplier
-	
-	# Hacemos un lerp rápido hacia la nueva velocidad para suavizar los cambios bruscos de la mano
 	_drag_velocity = _drag_velocity.lerp(target_velocity, 0.3)
 
 func process_camera_zoom(amount: float) -> void:

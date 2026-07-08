@@ -2,14 +2,14 @@ extends Control
 class_name CharacterCreationComponent
 
 # 📡 Añadimos p_avatar_path a la señal (pasa la ruta como String)
-signal profile_created(player_name: String, lastname: String, age: int, role: String, p_avatar_path: String)
+signal profile_created(player_name: String, lastname: String, age: int, role: String, p_avatar_path: String, pnf: String)
 
 # Referencias internas dentro de tu CustomizationBox
 @onready var name_input: LineEdit = $CustomizationBox/UserInfoPanel/UserInfoRow/NameLIne
 @onready var lastname_input: LineEdit = $CustomizationBox/UserInfoPanel/UserInfoRow/SurnameLine
 @onready var age_input: SpinBox = $CustomizationBox/UserInfoPanel/UserInfoRow/AgeLine
 @onready var role_input: OptionButton = $CustomizationBox/UserInfoPanel/UserInfoRow/OptionButton
-
+@onready var pnf_input: OptionButton = $CustomizationBox/UserInfoPanel/UserInfoRow/OptionButtonPNF
 # 🖼️ Referencias para el Avatar (PlayerPfpPanel)
 @onready var pfp_texture: TextureRect = $CustomizationBox/PlayerPfpPanel/PlayerPfpRow/HBoxContainer/Pfp
 @onready var upload_button: Button = $CustomizationBox/PlayerPfpPanel/PlayerPfpRow/UploadFileButton
@@ -66,13 +66,14 @@ func _on_continue_pressed() -> void:
 	var final_lastname: String = lastname_input.text.strip_edges() if lastname_input else "Estudiante"
 	var final_age: int = int(age_input.value) if age_input else 20
 	var final_role: String = "Novato"
-	
+	var final_pnf: String = "INFORMATICA"
 	if role_input and role_input.selected != -1:
 		final_role = role_input.get_item_text(role_input.selected)
-	
+	if pnf_input and pnf_input.selected!=-1:
+		final_pnf = pnf_input.get_item_text(pnf_input.selected)
 	if final_name.is_empty():
 		ToastManager.show_toast("Debes asignar un nombre a tu administrador", "ATAQUE")
 		return
 		
 	# Emitimos la señal incluyendo la ruta de la foto seleccionada
-	profile_created.emit(final_name, final_lastname, final_age, final_role, current_avatar_path)
+	profile_created.emit(final_name, final_lastname, final_age, final_role, current_avatar_path, final_pnf)

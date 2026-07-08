@@ -3,19 +3,21 @@
 [ext_resource type="Script" uid="uid://clrlis3lhd7mt" path="res://scripts/main/game_component/game_component.gd" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://dfra0dxg2d84" path="res://scripts/main/main.gd" id="1_iuonh"]
 [ext_resource type="Script" uid="uid://brt4gk1cdb51b" path="res://scripts/ui/start_menu_component/start_menu_component.gd" id="3_l3cfh"]
-[ext_resource type="PackedScene" uid="uid://djj8q64l1kgxw" path="res://scenes/levels/test/test_02.tscn" id="3_yyfjg"]
+[ext_resource type="PackedScene" uid="uid://jmncbbp4033x" path="res://scenes/levels/among_us_test/among_us.tscn" id="3_r4lks"]
 [ext_resource type="Script" uid="uid://x72hao2ny24i" path="res://scripts/ui/pause_menu_component/pause_menu_component.gd" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://cdehn8nuhun2i" path="res://scripts/building_manager/building_manager.gd" id="4_blune"]
 [ext_resource type="Theme" uid="uid://cb4441pcobg3v" path="res://tres/fonts/main_font.tres" id="4_ow5a4"]
-[ext_resource type="PackedScene" uid="uid://g45tabawybw3" path="res://scenes/hardware/server_rack/server_rack_preview/server_rack_preview.tscn" id="5_7smn1"]
 [ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="5_hujxm"]
 [ext_resource type="Texture2D" uid="uid://cpbxanfdjbwds" path="res://assets/ui/menu_background/main.png" id="5_yyfjg"]
-[ext_resource type="PackedScene" uid="uid://d1aihcqwhtf4g" path="res://scenes/hardware/server_rack/server_rack_preview_error/server_rack_preview_error.tscn" id="6_hxu8e"]
-[ext_resource type="PackedScene" uid="uid://k6r5b5w8eu1r" path="res://scenes/hardware/server_rack/server_rack.tscn" id="6_raeie"]
 [ext_resource type="Texture2D" uid="uid://ctfsb414ft8e4" path="res://assets/ui/creation_menu_background/creation_menu.png" id="8_b1x3f"]
 [ext_resource type="Script" uid="uid://l0yq2jvbamtg" path="res://scripts/main/tutorial_component/tutorial_component.gd" id="8_hxu8e"]
+[ext_resource type="Script" uid="uid://b146w0tvqil70" path="res://scripts/main/shop_component/shop_component.gd" id="9_necax"]
 [ext_resource type="Texture2D" uid="uid://bbbhtpmbyaeqv" path="res://assets/ui/pfp_placeholder/Screenshot From 2026-06-17 20-48-51.png" id="10_ouso4"]
 [ext_resource type="Script" uid="uid://c5uaeuuyux50s" path="res://scripts/ui/character_creation_component/character_creation_component.gd" id="12_raeie"]
+[ext_resource type="PackedScene" uid="uid://d26q3rn35pjrc" path="res://scenes/ui/loading/loading_screen/loading_screen.tscn" id="18_necax"]
+[ext_resource type="PackedScene" uid="uid://dwak2fx0giibn" path="res://scenes/ui/shop/shop_item_row/shop_item_row.tscn" id="18_ou6is"]
+[ext_resource type="PackedScene" uid="uid://cfgbkig6gf5g0" path="res://scenes/ui/shop/shop_ui/shop_ui.tscn" id="19_necax"]
+[ext_resource type="PackedScene" uid="uid://6d3jhi8gn4wr" path="res://scenes/ui/tutorial/tutorial_popup_clean.tscn" id="20_r4lks"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8run"]
 bg_color = Color(0, 0, 0, 0.40784314)
@@ -62,16 +64,16 @@ script = ExtResource("1_iuonh")
 
 [node name="GameComponent" type="Node" parent="." unique_id=121483436]
 script = ExtResource("1_hyk8p")
-default_level_scene = ExtResource("3_yyfjg")
+default_level_scene = ExtResource("3_r4lks")
 
 [node name="BuildingManager" type="Node3D" parent="GameComponent" unique_id=58853136]
 script = ExtResource("4_blune")
-server_preview_scene = ExtResource("5_7smn1")
-server_error_scene = ExtResource("6_hxu8e")
-server_real_scene = ExtResource("6_raeie")
 
 [node name="TutorialComponent" type="Node" parent="GameComponent" unique_id=591584217]
 script = ExtResource("8_hxu8e")
+
+[node name="ShopComponent" type="Node" parent="GameComponent" unique_id=1385757908]
+script = ExtResource("9_necax")
 
 [node name="LevelContainer" type="Node3D" parent="." unique_id=1856478835]
 
@@ -193,17 +195,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_a8run")
 
 [node name="UserInfoRow" type="VBoxContainer" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel" unique_id=94352194]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -84.0
-offset_top = -138.0
-offset_right = 81.0
-offset_bottom = 137.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.975
+offset_top = -2.67
+offset_right = 17.975006
+offset_bottom = 58.329987
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.845, 0.845)
 
 [node name="NameLabel" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=1985106347]
 layout_mode = 2
@@ -245,6 +246,34 @@ popup/item_1/text = "Estudiante"
 popup/item_1/id = 1
 popup/item_2/text = "Ciberexperto"
 popup/item_2/id = 2
+
+[node name="PNF" type="Label" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=1348097744]
+layout_mode = 2
+text = "PNF"
+label_settings = SubResource("LabelSettings_ou6is")
+
+[node name="OptionButtonPNF" type="OptionButton" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox/UserInfoPanel/UserInfoRow" unique_id=1316815551]
+layout_mode = 2
+selected = 0
+item_count = 9
+popup/item_0/text = "INFORMATICA"
+popup/item_0/id = 0
+popup/item_1/text = "ELECTRONICA"
+popup/item_1/id = 1
+popup/item_2/text = "ELECTRICIDAD"
+popup/item_2/id = 2
+popup/item_3/text = "TELECOMUNICACIONES"
+popup/item_3/id = 3
+popup/item_4/text = "MECANICA"
+popup/item_4/id = 4
+popup/item_5/text = "MANTENIMIENTO"
+popup/item_5/id = 5
+popup/item_6/text = "INSTRUMENTACION"
+popup/item_6/id = 6
+popup/item_7/text = "MECANICA"
+popup/item_7/id = 7
+popup/item_8/text = "CONTADURIA"
+popup/item_8/id = 8
 
 [node name="PlayerPfpPanel" type="Panel" parent="UI_Canvas/CharacterCreationComponent/CustomizationBox" unique_id=2051510778]
 custom_minimum_size = Vector2(200, 300)
@@ -350,3 +379,35 @@ layout_mode = 2
 theme = ExtResource("4_ow5a4")
 theme_override_fonts/font = ExtResource("5_hujxm")
 text = "Salir"
+
+[node name="ToastContainer" type="VBoxContainer" parent="UI_Canvas" unique_id=609394357 groups=["toast_container"]]
+layout_mode = 1
+offset_left = 600.0
+offset_top = 547.0
+offset_right = 1125.0
+offset_bottom = 623.0
+mouse_filter = 2
+
+[node name="TutorialPopup" parent="UI_Canvas" unique_id=1111874770 instance=ExtResource("20_r4lks")]
+visible = false
+layout_mode = 1
+
+[node name="ShopUI" parent="UI_Canvas" unique_id=731318927 instance=ExtResource("19_necax")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+item_row_scene = ExtResource("18_ou6is")
+
+[node name="LoadingScreen" parent="UI_Canvas" unique_id=405736739 instance=ExtResource("18_necax")]
+visible = false
+layout_mode = 1
