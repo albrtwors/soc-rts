@@ -1,83 +1,79 @@
 extends Node
 
-# 📋 BASE DE DATOS ESTRUCTURADA PARA PROGRESIÓN DINÁMICA
+# 📋 ÚNICA FUENTE DE VERDAD: Objetivos estructurados por ID + Texto de interfaz
 const LESSONS = [
 	{
 		"id": "introduction_soc",
 		"lesson_name": "01. Introducción al SOC",
-		"requires_lesson": "", # Disponible desde el inicio
+		"hud_level": "Nivel: Movimiento",
+		"hud_instruction": "Arrastra con Click Derecho para mover la cámara",
+		"requires_lesson": "",
 		"pages": [
 			{
 				"title": "Bienvenido Operador",
 				"description": "Estás a cargo de la seguridad de la infraestructura. Tu objetivo es mitigar amenazas antes de que comprometan el núcleo.",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
-			},
-			{
-				"title": "Expande tu laboratorio",
-				"description": "Por ahora algunas zonas estarán restringidas, cuando tengas suficientes recursos ve a la tienda a adquirirlas!",
+			},	{
+				"title": "Explorar el laboratorio",
+				"description": "Comencemos por el movimiento. Para moverte basta con arrastrar el mouse con click izquierdo presionado",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Reconocer los servidores principales",
-			"Abrir la Tienda del SOC",
-			"Adquirir un Servidor Gama Muy Baja"
+			{"id": "moving", "text": "Reconocer los servidores principales"},
+		
 		]
 	},
 	{
 		"id": "the_shop",
 		"lesson_name": "02. La Tienda",
-		"requires_lesson": "introduction_soc", # Requiere completar la lección 1
+		"hud_level": "Nivel: Tienda",
+		"hud_instruction": "Haz Click en el ícono de carro de compras para abrir la tienda",
+		"requires_lesson": "introduction_soc",
 		"pages": [
 			{
-				"title": "Comprar",
-				"description": "La tienda estará disponible en todo momento, solo haz click en el botón y se abrirá la interfaz.",
-				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
-			},
-			{
-				"title": "Categorías",
-				"description": "Algunos objetos serán mejoras, otros directamente podrás construirlos en tu infraestructura tecnológica.",
+				"title": "Tienda",
+				"description": "La tienda estará disponible en todo momento. Para abrirla solo bastará con hacer click en el ícono del carro de compras",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Instalar una Impresora Láser"
+			{"id": "shop", "text": "Abrir la tienda"}
 		]
 	},
 	{
 		"id": "traffic_printers",
 		"lesson_name": "03. Tráfico e Impresoras",
-		"requires_lesson": "the_shop", # Requiere completar la lección 2
+		"hud_level": "NIVEL 01",
+		"hud_instruction": "Arrastra con Click Derecho para mover la cámara",
+		"requires_lesson": "the_shop",
 		"pages": [
 			{
 				"title": "Reportes Físicos",
-				"description": "Las impresoras generan reportes que aumentan tus ingresos por minuto, pero son vectores comunes de intrusión de firmware.",
+				"description": "Las impresoras generan reportes...",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Recolectar reportes físicos impresos"
+			{"id": "collect_reports", "text": "Recolectar reportes físicos impresos"}
 		]
 	},
 	{
 		"id": "siem_monitoring",
 		"lesson_name": "04. Monitoreo de Red (SIEM)",
+		"hud_level": "NIVEL 01",
+		"hud_instruction": "Arrastra con Click Derecho para mover la cámara",
 		"requires_lesson": "traffic_printers",
 		"pages": [
 			{
 				"title": "El Tablero Principal",
-				"description": "Aquí verás el flujo de datos en tiempo real. Presta atención a los picos inusuales de tráfico; podrían indicar un escaneo de puertos.",
-				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
-			},
-			{
-				"title": "Logs de Eventos",
-				"description": "Cada acción se registra. Filtrar los logs te permitirá aislar IPs sospechosas antes de que inicien una exfiltración.",
+				"description": "Aquí verás el flujo de datos...",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Abrir la consola SIEM",
-			"Identificar y bloquear una IP sospechosa"
+			{"id": "open_siem", "text": "Abrir la consola SIEM"},
+			{"id": "block_ip", "text": "Identificar y bloquear una IP sospechosa"}
 		]
 	},
 	{
@@ -87,18 +83,13 @@ const LESSONS = [
 		"pages": [
 			{
 				"title": "Falsos Positivos",
-				"description": "No todo el tráfico bloqueado es un ataque. Aprende a distinguir entre un empleado olvidando su contraseña y un ataque de fuerza bruta.",
-				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
-			},
-			{
-				"title": "Severidad del Incidente",
-				"description": "Clasifica las alertas en Baja, Media y Alta para priorizar los recursos del SOC de manera eficiente.",
+				"description": "No todo el tráfico bloqueado es un ataque...",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Descartar 3 falsos positivos",
-			"Resolver una alerta de severidad Alta"
+			{"id": "dismiss_false_positive", "text": "Descartar 3 falsos positivos"},
+			{"id": "resolve_high_alert", "text": "Resolver una alerta de severidad Alta"}
 		]
 	},
 	{
@@ -108,13 +99,13 @@ const LESSONS = [
 		"pages": [
 			{
 				"title": "Actualizaciones Críticas",
-				"description": "Los atacantes explotarán vulnerabilidades conocidas. Mantén tus servidores y sistemas operativos actualizados desde el panel de control.",
+				"description": "Los atacantes explotarán vulnerabilidades...",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			"Actualizar el firmware del Servidor Gama Baja",
-			"Desplegar un Firewall básico en la red"
+			{"id": "patch_firmware", "text": "Actualizar el firmware del Servidor Gama Baja"},
+			{"id": "deploy_firewall", "text": "Desplegar un Firewall básico en la red"}
 		]
 	}
 ]

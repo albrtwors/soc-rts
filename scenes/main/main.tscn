@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://d26q3rn35pjrc" path="res://scenes/ui/loading/loading_screen/loading_screen.tscn" id="18_necax"]
 [ext_resource type="PackedScene" uid="uid://dwak2fx0giibn" path="res://scenes/ui/shop/shop_item_row/shop_item_row.tscn" id="18_ou6is"]
 [ext_resource type="PackedScene" uid="uid://cfgbkig6gf5g0" path="res://scenes/ui/shop/shop_ui/shop_ui.tscn" id="19_necax"]
+[ext_resource type="PackedScene" uid="uid://q0essufosrw2" path="res://scenes/ui/tutorial/hud/tutorial_hud.tscn" id="19_r4lks"]
 [ext_resource type="PackedScene" uid="uid://6d3jhi8gn4wr" path="res://scenes/ui/tutorial/tutorial_popup_clean.tscn" id="20_r4lks"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8run"]
@@ -410,4 +411,7 @@ item_row_scene = ExtResource("18_ou6is")
 
 [node name="LoadingScreen" parent="UI_Canvas" unique_id=405736739 instance=ExtResource("18_necax")]
 visible = false
+layout_mode = 1
+
+[node name="TutorialHUD" parent="UI_Canvas" unique_id=1210976823 instance=ExtResource("19_r4lks")]
 layout_mode = 1

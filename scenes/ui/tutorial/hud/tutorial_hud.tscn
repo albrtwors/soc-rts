@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://q0essufosrw2"]
+
+[ext_resource type="Script" uid="uid://bxt5ptqjckvra" path="res://scripts/ui/tutorial_hud/tutorial_hud.gd" id="1_hbqir"]
+[ext_resource type="Texture2D" uid="uid://bia1afy8xva7r" path="res://assets/ui/player/stats/Date&HourCard.png" id="1_vl2yo"]
+[ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_jm4e1"]
+[ext_resource type="Texture2D" uid="uid://bvp1bo1evpojp" path="res://assets/ui/icons/drag.png" id="3_eqxhd"]
+[ext_resource type="Texture2D" uid="uid://cni48prkkxlcu" path="res://assets/ui/icons/click.png" id="4_0fsnt"]
+[ext_resource type="PackedScene" uid="uid://c14wo3htifjkx" path="res://scenes/ui/tutorial/lessons/shop_lesson.tscn" id="6_p8pxj"]
+
+[sub_resource type="Theme" id="Theme_hbqir"]
+
+[node name="TutorialHUD" type="Control" unique_id=1210976823]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_hbqir")
+
+[node name="LessonBadgePanel" type="TextureRect" parent="." unique_id=16006637]
+layout_mode = 0
+offset_left = 875.0
+offset_top = 123.00001
+offset_right = 1484.0
+offset_bottom = 209.0
+scale = Vector2(0.41, 0.84)
+texture = ExtResource("1_vl2yo")
+
+[node name="LessonTitleLabel" type="Label" parent="." unique_id=367977409]
+layout_mode = 0
+offset_left = 898.0
+offset_top = 149.99997
+offset_right = 1380.927
+offset_bottom = 172.99997
+theme_override_fonts/font = ExtResource("2_jm4e1")
+text = "Nivel:"
+
+[node name="LessonInstructionLabel" type="Label" parent="." unique_id=441752872]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 0
+offset_left = 401.0
+offset_top = 527.0
+offset_right = 1101.0
+offset_bottom = 620.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/shadow_outline_size = 18
+theme_override_fonts/font = ExtResource("2_jm4e1")
+theme_override_font_sizes/font_size = 34
+text = "asdasadssd asdasadssdasdasadssdasdasadssd"
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=843765194]
+
+[node name="MovementLesson" type="Node" parent="." unique_id=864928290]
+
+[node name="HandClick" type="TextureRect" parent="MovementLesson" unique_id=675671291]
+visible = false
+self_modulate = Color(16.794127, 16.44536, 17.908, 1)
+custom_minimum_size = Vector2(2.84, 4.07)
+offset_left = 253.0
+offset_top = 261.0
+offset_right = 388.445
+offset_bottom = 396.445
+theme = SubResource("Theme_hbqir")
+texture = ExtResource("3_eqxhd")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="HandDrag" type="TextureRect" parent="MovementLesson" unique_id=704928379]
+visible = false
+offset_left = 86.0
+offset_top = 15.0
+offset_right = 141.33
+offset_bottom = 69.455
+texture = ExtResource("4_0fsnt")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="ShopLesson" parent="." unique_id=1151859009 instance=ExtResource("6_p8pxj")]

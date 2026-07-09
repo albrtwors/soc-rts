@@ -29,6 +29,10 @@ func _ready() -> void:
 func _on_shop_opened() -> void:
 	visible = true
 	# ⚡ EJECUCIÓN CRUCIAL: Construimos la UI únicamente cuando ya es visible
+	if has_node("/root/EventBus") and EventBus.is_in_tutorial:
+		# Emitimos "shop" que coincide exactamente con el ID de tu base de datos
+		EventBus.objective_completed.emit("shop")
+		print("ShopUI: Se notificó la apertura de la tienda al EventBus.")
 	_build_category_tabs()
 	_render_catalog(current_category)
 

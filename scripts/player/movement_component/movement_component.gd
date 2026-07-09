@@ -27,25 +27,28 @@ var _drag_velocity: Vector3 = Vector3.ZERO
 var _camera_initial_offset: Vector3
 var _current_zoom_factor: float = 1.0
 
+# 📊 TRACKING DEL TUTORIAL (Mapeado al ID "moving")
+var _previous_frame_position: Vector3 = Vector3.ZERO
+var _accumulated_distance: float = 0.0
+const TUTORIAL_MOVE_THRESHOLD: float = 15.0 # Unidades de espacio necesarias para validar
+var _moving_objective_completed: bool = false
+
 func setup(p_root: Node3D, p_camera: Camera3D) -> void:
 	player_root = p_root
 	camera = p_camera
 	target_position = player_root.global_position
 	_camera_initial_offset = camera.position
+	_previous_frame_position = player_root.global_position
 
 func _input(event: InputEvent) -> void:
-	# 🛑 FILTRO CRÍTICO 1: Si el mouse está haciendo clic en un botón o elemento de interfaz,
-	# cancelamos el procesamiento para que la cámara no se mueva por debajo.
 	if get_viewport().gui_get_hovered_control() != null:
 		if event is InputEventMouseButton and not event.pressed:
-			is_dragging = false # Previene que el drag se quede pegado al soltar el clic sobre la UI
+			is_dragging = false 
 		return
 
-	# 🛑 FILTRO CRÍTICO 2: Interruptor de seguridad para construcción o tutorial
-	if EventBus.is_building or EventBus.is_in_tutorial: 
+	if EventBus.is_building or EventBus.is_tutorial_popup_open: 
 		is_dragging = false 
 		_drag_velocity = Vector3.ZERO 
-		# Permitimos el zoom incluso en modo construcción, quitando el return de aquí si deseas zoom siempre
 		if not (event is InputEventMouseButton and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN)):
 			return
 
@@ -56,7 +59,7 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			process_camera_zoom(zoom_speed)  
 
-	# --- 2. CAPTURA DE CLICKS (ARRASTRE O VIAJE) ---
+	# --- 2. CAPTURA DE CLICKS ---
 	var mouse_button := event as InputEventMouseButton
 	if mouse_button and mouse_button.button_index == MOUSE_BUTTON_LEFT:
 		if mouse_button.pressed:
@@ -93,6 +96,9 @@ func _process(delta: float) -> void:
 		if current_pos.distance_to(real_target) < 0.1:
 			is_moving_to_target = false
 
+	# 🔬 EVALUACIÓN EN TIEMPO REAL PARA LA LECCIÓN 1
+	_track_tutorial_movement_progress()
+
 func calculate_drag_momentum(relative_motion: Vector2) -> void:
 	var speed_multiplier = drag_sensitivity * _current_zoom_factor
 	var target_velocity = Vector3(-relative_motion.x, 0, -relative_motion.y) * speed_multiplier
@@ -114,3 +120,25 @@ func get_click_3d_position(mouse_pos: Vector2) -> void:
 	if not result.is_empty():
 		target_position = result.position
 		is_moving_to_target = true
+
+## 🔄 Rastrear el desplazamiento relativo acumulado
+func _track_tutorial_movement_progress() -> void:
+	# Si ya lo completó o el popup está abierto leyendo teoría, ignorar tracking
+	if _moving_objective_completed or EventBus.is_tutorial_popup_open:
+		_previous_frame_position = player_root.global_position
+		return
+		
+	var current_pos := player_root.global_position
+	var frame_distance := _previous_frame_position.distance_to(current_pos)
+	
+	if frame_distance > 0.001:
+		_accumulated_distance += frame_distance
+		
+		# Si superamos el umbral requerido por el laboratorio 3D, notificamos al árbitro
+		if _accumulated_distance >= TUTORIAL_MOVE_THRESHOLD:
+			_moving_objective_completed = true
+			if has_node("/root/EventBus"):
+				EventBus.tutorial_step_advanced.emit("moving")
+				print("MovementComponent: ¡Hito de navegación alcanzado! Distancia total: ", _accumulated_distance)
+
+	_previous_frame_position = current_pos

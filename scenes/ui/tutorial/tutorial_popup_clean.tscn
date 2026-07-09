@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://27pp5wty73pr" path="res://scripts/ui/tutorial_popup/tutorial_popup.gd" id="1_06v8a"]
 [ext_resource type="Texture2D" uid="uid://dmg6ew5nxa8s7" path="res://assets/ui/tutorial_images/1.png" id="1_fdnoe"]
 [ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_tnhdi"]
-[ext_resource type="PackedScene" uid="uid://ll1414jt3wee" path="res://scenes/ui/game_menu_panel/game_menu_panel.tscn" id="4_mttti"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_06v8a"]
 bg_color = Color(0.22745098, 0.22745098, 0.22745098, 0.92941177)
@@ -177,6 +176,3 @@ layout_mode = 2
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_tnhdi")
 text = "Comenzar"
-
-[node name="GameMenuPanel" parent="MarginContainer/HBoxContainer/RightContentArea" unique_id=234218656 instance=ExtResource("4_mttti")]
-layout_mode = 2
