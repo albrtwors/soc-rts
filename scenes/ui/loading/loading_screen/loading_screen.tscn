@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_e6vfx"]
 
 [node name="LoadingScreen" type="Control" unique_id=405736739]
+z_index = 12
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -4,12 +4,28 @@
 [ext_resource type="Script" uid="uid://b0kfib4k4nt60" path="res://scripts/ui/game_menu_panel/game_menu_panel.gd" id="1_tpoy5"]
 [ext_resource type="Texture2D" uid="uid://c43ssoqmwbson" path="res://assets/ui/icons/shop.svg" id="2_tpoy5"]
 [ext_resource type="Texture2D" uid="uid://d17g7k4c83i78" path="res://assets/ui/icons/scan.svg" id="3_e6ppx"]
-[ext_resource type="Texture2D" uid="uid://caolawm7koqb5" path="res://assets/ui/icons/bot.svg" id="4_ttgj7"]
 [ext_resource type="Texture2D" uid="uid://dernrkkj7pmab" path="res://assets/ui/icons/trophy.svg" id="5_kc247"]
 [ext_resource type="Texture2D" uid="uid://c6g08c3lwsfra" path="res://assets/ui/icons/exit.svg" id="6_lwxqg"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r4lks"]
+bg_color = Color(0, 0, 0, 0.38431373)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.9124097, 0.9178659, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pc2fo"]
 bg_color = Color(0.08235294, 0.08235294, 0.08235294, 0.48235294)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.908756, 0.9428632, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -22,14 +38,17 @@ expand_margin_bottom = 5.0
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mt61w"]
 load_path = "res://.godot/imported/play.svg-cb59c77e823299606105871a134c3052.ctex"
 
-[node name="GameMenuPanel" type="PanelContainer" unique_id=234218656 node_paths=PackedStringArray("game_start_button")]
-custom_minimum_size = Vector2(300, 200)
+[node name="GameMenuPanel" type="PanelContainer" unique_id=234218656 node_paths=PackedStringArray("game_start_button", "exit_button", "game_save_button")]
+custom_minimum_size = Vector2(377.385, 235.445)
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(1.265, 1.265)
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_r4lks")
 script = ExtResource("1_tpoy5")
 game_start_button = NodePath("MarginContainer/VBoxContainer/GridContainer/Button")
+exit_button = NodePath("MarginContainer/VBoxContainer/GridContainer/Button6")
+game_save_button = NodePath("MarginContainer/VBoxContainer/GridContainer/Button3")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=982606053]
 layout_mode = 2
@@ -48,9 +67,12 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_rfdu0")
 text = "MENÚ DE OPCIONES"
+horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer" unique_id=329217709]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 3
@@ -59,14 +81,15 @@ columns = 3
 custom_minimum_size = Vector2(60, 50)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/icon_normal_color = Color(18.892157, 18.892157, 18.892157, 1)
+theme_override_colors/font_color = Color(0.039215688, 0.81960785, 0.827451, 1)
+theme_override_colors/icon_normal_color = Color(0.0056184796, 11.38555, 13.904737, 1)
 theme_override_colors/icon_focus_color = Color(18.892157, 18.892157, 18.892157, 1)
 theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_rfdu0")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pc2fo")
-text = "Iniciar"
+text = "Continuar"
 icon = SubResource("CompressedTexture2D_mt61w")
 autowrap_trim_flags = 0
 icon_alignment = 1
@@ -77,15 +100,15 @@ expand_icon = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.5713092, 1, 0.41698995, 1)
-theme_override_colors/icon_normal_color = Color(3.1130435, 14.055527, 0, 1)
+theme_override_colors/font_color = Color(0.039215688, 0.81960785, 0.827451, 1)
+theme_override_colors/icon_normal_color = Color(0.0056184796, 11.38555, 13.904737, 1)
 theme_override_colors/icon_focus_color = Color(3.093805, 14.057576, 0, 0.81960785)
 theme_override_colors/icon_pressed_color = Color(3.093805, 14.057576, 0, 0.5529412)
 theme_override_fonts/font = ExtResource("1_rfdu0")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pc2fo")
-text = "Tienda"
+text = "Opciones"
 icon = ExtResource("2_tpoy5")
 autowrap_trim_flags = 0
 icon_alignment = 1
@@ -96,34 +119,16 @@ expand_icon = true
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.45882353, 0.72156864, 1, 1)
-theme_override_colors/icon_normal_color = Color(2.307277, 3.5152342, 4.795308, 1)
+theme_override_colors/font_color = Color(0.039215688, 0.81960785, 0.827451, 1)
+theme_override_colors/icon_normal_color = Color(0.0056184796, 11.38555, 13.904737, 1)
 theme_override_colors/icon_focus_color = Color(2.307277, 3.5152342, 4.795308, 1)
 theme_override_colors/icon_pressed_color = Color(2.307277, 3.5152342, 4.795308, 1)
 theme_override_fonts/font = ExtResource("1_rfdu0")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pc2fo")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pc2fo")
-text = "Escaneo"
+text = "Guardar"
 icon = ExtResource("3_e6ppx")
-autowrap_trim_flags = 0
-icon_alignment = 1
-vertical_icon_alignment = 0
-expand_icon = true
-
-[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer/GridContainer" unique_id=1706063181]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.4627451, 0.21960784, 0.5568628, 1)
-theme_override_colors/icon_normal_color = Color(0.9127187, 0.9127187, 0.9127187, 1)
-theme_override_colors/icon_focus_color = Color(1, 1, 1, 0.80784315)
-theme_override_colors/icon_pressed_color = Color(1, 1, 1, 0.69803923)
-theme_override_fonts/font = ExtResource("1_rfdu0")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pc2fo")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pc2fo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pc2fo")
-text = "Bot"
-icon = ExtResource("4_ttgj7")
 autowrap_trim_flags = 0
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -132,8 +137,8 @@ expand_icon = true
 [node name="Button5" type="Button" parent="MarginContainer/VBoxContainer/GridContainer" unique_id=1178758083]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.78431374, 0.7254902, 0.3137255, 1)
-theme_override_colors/icon_normal_color = Color(1.0306003, 1.0306003, 1.0306003, 1)
+theme_override_colors/font_color = Color(0.039215688, 0.81960785, 0.827451, 1)
+theme_override_colors/icon_normal_color = Color(0.0056184796, 11.38555, 13.904737, 1)
 theme_override_colors/icon_focus_color = Color(0.78431374, 0.7254902, 0.3137255, 1)
 theme_override_colors/icon_pressed_color = Color(0.78431374, 0.7254902, 0.3137255, 1)
 theme_override_fonts/font = ExtResource("1_rfdu0")
@@ -150,8 +155,8 @@ expand_icon = true
 [node name="Button6" type="Button" parent="MarginContainer/VBoxContainer/GridContainer" unique_id=1596183618]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.922, 0, 0.149, 1)
-theme_override_colors/icon_normal_color = Color(8.698837, 0, 0.9265695, 1)
+theme_override_colors/font_color = Color(0.039215688, 0.81960785, 0.827451, 1)
+theme_override_colors/icon_normal_color = Color(0.0056184796, 11.38555, 13.904737, 1)
 theme_override_colors/icon_focus_color = Color(8.69779, 0, 0.92187035, 1)
 theme_override_colors/icon_pressed_color = Color(8.69779, 0, 0.92187035, 1)
 theme_override_fonts/font = ExtResource("1_rfdu0")

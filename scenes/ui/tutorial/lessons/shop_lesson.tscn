@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c14wo3htifjkx"]
 
 [ext_resource type="Texture2D" uid="uid://c35r57xji7tow" path="res://assets/ui/icons/arrow.png" id="1_7vnx6"]
-[ext_resource type="Script" uid="uid://b0lost7n4me3e" path="res://scripts/ui/lessons/tutorial_lesson.gd" id="1_i6exu"]
+[ext_resource type="Script" uid="uid://b0lost7n4me3e" path="res://scripts/ui/lessons/shop_lesson.gd" id="1_i6exu"]
 
 [node name="ShopLesson" type="Node" unique_id=1151859009]
 script = ExtResource("1_i6exu")

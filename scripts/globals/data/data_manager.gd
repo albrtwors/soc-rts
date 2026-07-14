@@ -14,8 +14,16 @@ func create_new_game() -> void:
 	current_save = SaveData.new()
 	# Nos aseguramos de que el array empiece completamente vacío de candados
 	current_save.completed_lessons = []
+	
+	# ⚡ COMPROMISO DE BORRADO: Sobrescribimos el archivo en el disco de inmediato para eliminar el progreso viejo
+	var error := ResourceSaver.save(current_save, SAVE_PATH)
+	if error == OK:
+		print("¡Archivo de guardado físico limpiado con éxito en el disco!")
+	else:
+		print("Advertencia al limpiar archivo físico: ", error)
+		
 	print("¡Datos globales y progreso de tutoriales reseteados para nueva partida!")
-
+	
 func save_to_disk() -> void:
 	if not current_save: return
 	

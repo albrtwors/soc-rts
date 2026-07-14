@@ -6,22 +6,21 @@ const LESSONS = [
 		"id": "introduction_soc",
 		"lesson_name": "01. Introducción al SOC",
 		"hud_level": "Nivel: Movimiento",
-		"hud_instruction": "Arrastra con Click Derecho para mover la cámara",
+		"hud_instruction": "Arrastra con Click Izquierdo para mover la cámara",
 		"requires_lesson": "",
 		"pages": [
 			{
 				"title": "Bienvenido Operador",
 				"description": "Estás a cargo de la seguridad de la infraestructura. Tu objetivo es mitigar amenazas antes de que comprometan el núcleo.",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
-			},	{
+			},    {
 				"title": "Explorar el laboratorio",
 				"description": "Comencemos por el movimiento. Para moverte basta con arrastrar el mouse con click izquierdo presionado",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			{"id": "moving", "text": "Reconocer los servidores principales"},
-		
+			{"id": "moving", "text": "Reconocer los servidores principales"}
 		]
 	},
 	{
@@ -42,20 +41,22 @@ const LESSONS = [
 		]
 	},
 	{
-		"id": "traffic_printers",
-		"lesson_name": "03. Tráfico e Impresoras",
-		"hud_level": "NIVEL 01",
-		"hud_instruction": "Arrastra con Click Derecho para mover la cámara",
+		"id": "constructing_lesson",
+		"lesson_name": "03. Infraestructura",
+		"hud_level": "Nivel: Construcción",
+		"hud_instruction": "Haz click en el carrito para abrir la tienda",
 		"requires_lesson": "the_shop",
 		"pages": [
 			{
-				"title": "Reportes Físicos",
-				"description": "Las impresoras generan reportes...",
+				"title": "Expandiendo el Laboratorio",
+				"description": "Para mitigar incidentes y procesar logs, tu SOC necesita hardware real. Vamos a comprar e instalar tu primer Servidor en una zona permitida.",
 				"image_path": "res://assets/ui/shop/servers/Screenshot From 2026-07-06 22-14-06.png"
 			}
 		],
 		"objectives": [
-			{"id": "collect_reports", "text": "Recolectar reportes físicos impresos"}
+			{"id": "open_shop_build", "text": "Abrir la tienda de componentes"},
+			{"id": "preview_started", "text": "Hacer click en la cuadrícula de la carpeta"},
+			{"id": "install_server", "text": "Instalar el servidor en el suelo construible"}
 		]
 	},
 	{

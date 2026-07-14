@@ -11,7 +11,9 @@ class_name ShopUI2
 func _ready() -> void:
 	# La tienda inicia oculta en la terminal del SOC
 	visible = false
-	
+	if has_node("/root/EventBus"):
+		# ⚡ Escuchamos la orden de clausura del tutorial
+		EventBus.force_close_game_interfaces.connect(_on_force_close_requested)
 	if close_button:
 		close_button.pressed.connect(_on_close_pressed)
 		
@@ -70,3 +72,7 @@ func _on_close_pressed() -> void:
 	var shop_component = get_tree().get_first_node_in_group("shop_component") as ShopComponent
 	if shop_component:
 		shop_component.toggle_shop()
+func _on_force_close_requested() -> void:
+	if visible:
+		visible = false
+		print("ShopUI: Interfaz cerrada forzosamente por el sistema de tutoriales.")

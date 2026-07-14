@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cja8i4gqv413a"]
+
+[ext_resource type="Script" uid="uid://ced5i818w84ft" path="res://scripts/ui/lessons/constructing_lesson.gd" id="1_qodw5"]
+
+[node name="ConstructingLesson" type="Node" unique_id=717719961]
+script = ExtResource("1_qodw5")

@@ -5,11 +5,14 @@
 [ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="2_jm4e1"]
 [ext_resource type="Texture2D" uid="uid://bvp1bo1evpojp" path="res://assets/ui/icons/drag.png" id="3_eqxhd"]
 [ext_resource type="Texture2D" uid="uid://cni48prkkxlcu" path="res://assets/ui/icons/click.png" id="4_0fsnt"]
+[ext_resource type="Script" uid="uid://cb582ipeqw5aj" path="res://scripts/ui/lessons/movement_lesson.gd" id="4_g4r18"]
 [ext_resource type="PackedScene" uid="uid://c14wo3htifjkx" path="res://scenes/ui/tutorial/lessons/shop_lesson.tscn" id="6_p8pxj"]
+[ext_resource type="PackedScene" uid="uid://cja8i4gqv413a" path="res://scenes/ui/tutorial/lessons/constructing_lesson.tscn" id="7_thp3c"]
 
 [sub_resource type="Theme" id="Theme_hbqir"]
 
 [node name="TutorialHUD" type="Control" unique_id=1210976823]
+z_index = 12
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 3
 anchors_preset = 15
@@ -57,6 +60,7 @@ autowrap_mode = 3
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=843765194]
 
 [node name="MovementLesson" type="Node" parent="." unique_id=864928290]
+script = ExtResource("4_g4r18")
 
 [node name="HandClick" type="TextureRect" parent="MovementLesson" unique_id=675671291]
 visible = false
@@ -66,6 +70,7 @@ offset_left = 253.0
 offset_top = 261.0
 offset_right = 388.445
 offset_bottom = 396.445
+mouse_filter = 2
 theme = SubResource("Theme_hbqir")
 texture = ExtResource("3_eqxhd")
 expand_mode = 4
@@ -77,8 +82,21 @@ offset_left = 86.0
 offset_top = 15.0
 offset_right = 141.33
 offset_bottom = 69.455
+mouse_filter = 2
 texture = ExtResource("4_0fsnt")
 expand_mode = 2
 stretch_mode = 4
 
 [node name="ShopLesson" parent="." unique_id=1151859009 instance=ExtResource("6_p8pxj")]
+
+[node name="ConstructingLesson" parent="." unique_id=717719961 instance=ExtResource("7_thp3c")]
+
+[node name="StopWatchingTutorial" type="Button" parent="." unique_id=1398508164]
+layout_mode = 0
+offset_left = 918.0
+offset_top = 211.0
+offset_right = 1124.0
+offset_bottom = 245.0
+theme_override_fonts/font = ExtResource("2_jm4e1")
+theme_override_font_sizes/font_size = 20
+text = "Dejar de ver tutorial"

@@ -1,46 +1,55 @@
 extends Control
 class_name TutorialHUD
 
-# ⚡ Nodos de la UI
+# 🔍 Componentes base de la interfaz del HUD
 @onready var lesson_badge_panel: TextureRect = $LessonBadgePanel
 @onready var lesson_title_label: Label = $LessonTitleLabel
 @onready var lesson_instruction_label: Label = $LessonInstructionLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var stop_watching_tutorial: Button = $StopWatchingTutorial
 
-# ⭕ Nodos Polimórficos de Lecciones Organizadas
-@onready var movement_lesson: Node = $MovementLesson
-@onready var hand_click: TextureRect = $MovementLesson/HandClick
-@onready var shop_lesson: ShopLesson = $ShopLesson # 👈 Vinculamos el nuevo módulo
+# 🛠️ Componentes de lecciones modulares (Hijos en tu árbol de escena)
+@onready var movement_lesson: MovementLesson = $MovementLesson 
+@onready var shop_lesson: ShopLesson = $ShopLesson
+@onready var constructing_lesson: ConstructingLesson = $ConstructingLesson 
 
 var _guide_tween: Tween
-var _original_hand_pos: Vector2
 
 func _ready() -> void:
 	_hide_complete_hud()
-	_original_hand_pos = hand_click.position
+	
+	# ⚡ Conectamos la pulsación del botón omitir/cancelar
+	if stop_watching_tutorial:
+		stop_watching_tutorial.pressed.connect(_on_skip_tutorial_pressed)
 	
 	if has_node("/root/EventBus"):
 		EventBus.game_session_started.connect(_on_game_session_started)
 		EventBus.objective_completed.connect(_on_objective_completed)
 		EventBus.start_tutorial.connect(_hide_complete_hud)
+		
+		# 🔥 LA SOLUCIÓN: Si se cancela globalmente el tutorial, ocultamos el HUD de inmediato
+		EventBus.cancel_current_tutorial.connect(_hide_complete_hud)
 
+## Oculta todo el entorno gráfico y detiene las subtareas activas de cada lección
 func _hide_complete_hud() -> void:
 	lesson_badge_panel.visible = false
 	lesson_title_label.visible = false
 	lesson_instruction_label.visible = false
-	hand_click.visible = false
 	
-	if shop_lesson:
-		shop_lesson.stop_guidance()
-	if _guide_tween:
-		_guide_tween.kill()
+	if stop_watching_tutorial:
+		stop_watching_tutorial.visible = false 
+	
+	# Force-stop a los elementos hijos para evitar que los tweens queden flotando
+	if movement_lesson: movement_lesson.stop_lesson()
+	if shop_lesson: shop_lesson.stop_guidance()
+	if constructing_lesson: constructing_lesson.stop_lesson()
+	if _guide_tween: _guide_tween.kill()
 
-## 🎬 Se dispara al iniciar la simulación activa
+## Se dispara cuando el EventBus anuncia el arranque de una sesión práctica
 func _on_game_session_started(lesson_id: String) -> void:
 	var lesson_data = _get_lesson_data(lesson_id)
-	if lesson_data.is_empty(): 
-		return
-	
+	if lesson_data.is_empty(): return
+		
 	lesson_title_label.text = lesson_data.get("hud_level", "Nivel: Desconocido")
 	lesson_instruction_label.text = lesson_data.get("hud_instruction", "")
 	
@@ -48,60 +57,75 @@ func _on_game_session_started(lesson_id: String) -> void:
 	lesson_title_label.visible = true
 	lesson_instruction_label.visible = true
 	
-	# 🎛️ Enrutador de Guías Visuales por ID de Lección:
+	if stop_watching_tutorial:
+		stop_watching_tutorial.visible = true 
+	
 	match lesson_id:
-		"introduction_soc":
-			hand_click.visible = true
-			hand_click.modulate.a = 1.0
-			hand_click.position = _original_hand_pos
-			_start_smooth_drag_animation()
-			
+		"introduction_soc", "movement_lesson": 
+			if movement_lesson: 
+				movement_lesson.start_lesson(self)
 		"the_shop":
-			# Levantamos las flechas animadas del script especializado de tienda
-			shop_lesson.start_guidance()
+			if shop_lesson: 
+				shop_lesson.start_guidance()
+		"constructing_lesson":
+			if constructing_lesson: 
+				constructing_lesson.start_lesson(self)
 
-## 🔓 Se ejecuta cuando el jugador cumple hitos técnicos
+## Reacción exclusiva a los hitos alcanzados en el gameplay
 func _on_objective_completed(objective_key: String) -> void:
-	# Manejo del objetivo de la Lección 1
-	if objective_key == "moving":
-		if _guide_tween:
-			_guide_tween.kill()
-		var fade_tween = create_tween()
-		fade_tween.tween_property(hand_click, "modulate:a", 0.0, 0.3)
-		await fade_tween.finished
-		hand_click.visible = false
+	print("📢 TutorialHUD: Hito detectado en juego -> ", objective_key)
+	
+	if objective_key in ["moving", "movement", "player_moved"]:
+		if movement_lesson: 
+			movement_lesson.stop_lesson()
+		
+		if has_node("/root/ToastManager"):
+			ToastManager.show_toast("¡Excelente movimiento!", "INFO", 4.0)
+			
 		_transition_to_next_popup()
 		
-	# Manejo del objetivo de la Lección 2 (Apertura de tienda)
 	elif objective_key == "shop":
-		# Mandamos a apagar la flecha animada por su propio método
-		shop_lesson.stop_guidance()
+		if shop_lesson: 
+			shop_lesson.stop_guidance()
+			
+		if has_node("/root/ToastManager"):
+			ToastManager.show_toast("Tienda completada", "INFO", 4.0)
+			
 		_transition_to_next_popup()
+		
+	elif objective_key in ["open_shop_build", "preview_started", "install_server"]:
+		if constructing_lesson:
+			constructing_lesson.handle_objective_progress(objective_key)
+			if objective_key == "install_server":
+				if has_node("/root/ToastManager"):
+					ToastManager.show_toast("Servidor Instalado con Éxito", "INFO", 4.0)
+				_transition_to_next_popup()
 
-## 🔄 Rutina intermedia de espera y llamada al Popup
+## Da paso al siguiente popup cuidando las transiciones
 func _transition_to_next_popup() -> void:
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.3).timeout
 	if has_node("/root/EventBus"):
-		_hide_complete_hud()
-		EventBus.start_tutorial.emit() # Reabre el popup teórico de inmediato
+		lesson_badge_panel.visible = false
+		lesson_title_label.visible = false
+		lesson_instruction_label.visible = false
+		if stop_watching_tutorial:
+			stop_watching_tutorial.visible = false
+		
+		EventBus.start_tutorial.emit()
 
-## 🎨 Animación elástica de arrastre (Lección 1)
-func _start_smooth_drag_animation() -> void:
-	if _guide_tween:
-		_guide_tween.kill()
-	_guide_tween = create_tween().set_loops()
-	_guide_tween.tween_property(hand_click, "scale", Vector2(0.85, 0.85), 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	var target_drag_pos = _original_hand_pos + Vector2(150, 0)
-	_guide_tween.tween_property(hand_click, "position", target_drag_pos, 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_guide_tween.tween_property(hand_click, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	_guide_tween.tween_property(hand_click, "modulate:a", 0.0, 0.2)
-	_guide_tween.tween_callback(func(): hand_click.position = _original_hand_pos)
-	_guide_tween.tween_property(hand_click, "modulate:a", 1.0, 0.2)
+## ⚡ El usuario decide cancelar toda la inducción activa
+func _on_skip_tutorial_pressed() -> void:
+	print("📢 TutorialHUD: El jugador presionó omitir el tutorial.")
+	if has_node("/root/EventBus"):
+		EventBus.cancel_current_tutorial.emit()
 
 func _get_lesson_data(id: String) -> Dictionary:
 	if not has_node("/root/TutorialDatabase"): 
+		print("⚠️ TutorialHUD: No se encontró el Autoload /root/TutorialDatabase")
 		return {}
+		
 	for lesson in TutorialDatabase.LESSONS:
-		if lesson.get("id", "") == id:
+		if lesson.get("id", "") == id: 
 			return lesson
+			
 	return {}

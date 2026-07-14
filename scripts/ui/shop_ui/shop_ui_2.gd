@@ -1,45 +1,47 @@
 extends PanelContainer
 class_name ShopUI
 
-# 📦 Escena de la tarjeta (debe aceptar setup con el nuevo diccionario completo)
+# 📦 Escena de la tarjeta
 @export var item_row_scene: PackedScene 
 
-# 🔍 Referencias del Árbol de Nodos (Corregidas con MarginContainer)
+# 🔍 Referencias del Árbol de Nodos
 @onready var tabs_container: HBoxContainer = $MarginContainer/VBoxContainer/PagingTabs
 @onready var grid_container: GridContainer = $MarginContainer/VBoxContainer/ScrollContainer/GridContainer
 @onready var close_button: Button = $MarginContainer/VBoxContainer/CloseButton
 
-# Categoría activa por defecto para no arrancar en vacío
 var current_category: String = "SERVIDORES"
 
-
 func _ready() -> void:
-	# La tienda inicia oculta
 	visible = false
-	
 	if close_button:
 		close_button.pressed.connect(_on_close_pressed)
 		
-	# Conexión al backend
+	if has_node("/root/EventBus"):
+		EventBus.force_close_game_interfaces.connect(_on_force_close_requested)
+		
 	var shop_component = get_tree().get_first_node_in_group("shop_component") as ShopComponent
 	if shop_component:
 		shop_component.shop_opened.connect(_on_shop_opened)
 		shop_component.shop_closed.connect(_on_shop_closed)
 
 func _on_shop_opened() -> void:
-	visible = true
-	# ⚡ EJECUCIÓN CRUCIAL: Construimos la UI únicamente cuando ya es visible
+	visible = true  # ⚡ VISIBILIDAD INMEDIATA: Corrige el bug de doble pulsación
+	
+	# ⚡ EVALUACIÓN CONTEXTUAL STRICTA: Pasamos la acción al árbitro central sin duplicaciones
 	if has_node("/root/EventBus") and EventBus.is_in_tutorial:
-		# Emitimos "shop" que coincide exactamente con el ID de tu base de datos
-		EventBus.objective_completed.emit("shop")
-		print("ShopUI: Se notificó la apertura de la tienda al EventBus.")
+		var tutorial_component = get_tree().get_first_node_in_group("tutorial_component") as TutorialComponent
+		if tutorial_component and tutorial_component.is_active:
+			if tutorial_component.current_lesson_id == "the_shop":
+				EventBus.tutorial_step_advanced.emit("shop")
+			elif tutorial_component.current_lesson_id == "constructing_lesson":
+				EventBus.tutorial_step_advanced.emit("open_shop_build")
+				
 	_build_category_tabs()
 	_render_catalog(current_category)
 
 func _on_shop_closed() -> void:
 	visible = false
 
-## 📑 Genera dinámicamente botones superiores para cada categoría en la Database
 func _build_category_tabs() -> void:
 	for child in tabs_container.get_children():
 		child.queue_free()
@@ -56,7 +58,6 @@ func _build_category_tabs() -> void:
 		)
 		tabs_container.add_child(tab_button)
 
-## 🛒 Limpia, instancia y llena las tarjetas con la info de la base de datos
 func _render_catalog(category: String) -> void:
 	for child in grid_container.get_children():
 		child.queue_free()
@@ -69,10 +70,7 @@ func _render_catalog(category: String) -> void:
 	
 	for subcategory in category_items.keys():
 		var item_data: Dictionary = category_items[subcategory]
-		
-		if not item_row_scene:
-			push_error("ShopUI: Falta 'item_row_scene' en el Inspector.")
-			return
+		if not item_row_scene: return
 			
 		var card_instance = item_row_scene.instantiate() as ShopItemRow
 		grid_container.add_child(card_instance)
@@ -91,3 +89,7 @@ func _on_close_pressed() -> void:
 	var shop_component = get_tree().get_first_node_in_group("shop_component") as ShopComponent
 	if shop_component:
 		shop_component.toggle_shop()
+		
+func _on_force_close_requested() -> void:
+	if visible:
+		visible = false

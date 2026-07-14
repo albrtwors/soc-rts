@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dfra0dxg2d84" path="res://scripts/main/main.gd" id="1_iuonh"]
 [ext_resource type="Script" uid="uid://brt4gk1cdb51b" path="res://scripts/ui/start_menu_component/start_menu_component.gd" id="3_l3cfh"]
 [ext_resource type="PackedScene" uid="uid://jmncbbp4033x" path="res://scenes/levels/among_us_test/among_us.tscn" id="3_r4lks"]
-[ext_resource type="Script" uid="uid://x72hao2ny24i" path="res://scripts/ui/pause_menu_component/pause_menu_component.gd" id="4_6q06x"]
 [ext_resource type="Script" uid="uid://cdehn8nuhun2i" path="res://scripts/building_manager/building_manager.gd" id="4_blune"]
 [ext_resource type="Theme" uid="uid://cb4441pcobg3v" path="res://tres/fonts/main_font.tres" id="4_ow5a4"]
 [ext_resource type="FontFile" uid="uid://dpyqelqok232" path="res://assets/fonts/Tektur-Bold.ttf" id="5_hujxm"]
@@ -14,6 +13,7 @@
 [ext_resource type="Script" uid="uid://b146w0tvqil70" path="res://scripts/main/shop_component/shop_component.gd" id="9_necax"]
 [ext_resource type="Texture2D" uid="uid://bbbhtpmbyaeqv" path="res://assets/ui/pfp_placeholder/Screenshot From 2026-06-17 20-48-51.png" id="10_ouso4"]
 [ext_resource type="Script" uid="uid://c5uaeuuyux50s" path="res://scripts/ui/character_creation_component/character_creation_component.gd" id="12_raeie"]
+[ext_resource type="PackedScene" uid="uid://c5kp1w14xrt8l" path="res://scenes/ui/pause_menu/pause_menu_component.tscn" id="14_necax"]
 [ext_resource type="PackedScene" uid="uid://d26q3rn35pjrc" path="res://scenes/ui/loading/loading_screen/loading_screen.tscn" id="18_necax"]
 [ext_resource type="PackedScene" uid="uid://dwak2fx0giibn" path="res://scenes/ui/shop/shop_item_row/shop_item_row.tscn" id="18_ou6is"]
 [ext_resource type="PackedScene" uid="uid://cfgbkig6gf5g0" path="res://scenes/ui/shop/shop_ui/shop_ui.tscn" id="19_necax"]
@@ -334,52 +334,8 @@ theme_override_fonts/font = ExtResource("5_hujxm")
 theme_override_font_sizes/font_size = 24
 text = "Continuar"
 
-[node name="PauseMenuComponent" type="Control" parent="UI_Canvas" unique_id=569133660 node_paths=PackedStringArray("btn_resume", "btn_save", "btn_exit_to_menu")]
-visible = false
+[node name="PauseMenuComponent" parent="UI_Canvas" unique_id=2108493348 instance=ExtResource("14_necax")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("4_6q06x")
-btn_resume = NodePath("ButtonsContainer/Resume")
-btn_save = NodePath("ButtonsContainer/Save")
-btn_exit_to_menu = NodePath("ButtonsContainer/Exit")
-
-[node name="ButtonsContainer" type="VBoxContainer" parent="UI_Canvas/PauseMenuComponent" unique_id=903771721]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -74.0
-offset_right = -17.0
-offset_bottom = 75.0
-grow_horizontal = 0
-grow_vertical = 2
-alignment = 1
-
-[node name="Resume" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=610434636]
-layout_mode = 2
-theme = ExtResource("4_ow5a4")
-theme_override_fonts/font = ExtResource("5_hujxm")
-text = "Continuar"
-
-[node name="Save" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=88434292]
-layout_mode = 2
-theme = ExtResource("4_ow5a4")
-theme_override_fonts/font = ExtResource("5_hujxm")
-text = "Guardar"
-
-[node name="Exit" type="Button" parent="UI_Canvas/PauseMenuComponent/ButtonsContainer" unique_id=107238645]
-layout_mode = 2
-theme = ExtResource("4_ow5a4")
-theme_override_fonts/font = ExtResource("5_hujxm")
-text = "Salir"
 
 [node name="ToastContainer" type="VBoxContainer" parent="UI_Canvas" unique_id=609394357 groups=["toast_container"]]
 layout_mode = 1

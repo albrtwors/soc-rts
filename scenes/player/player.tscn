@@ -72,6 +72,18 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmtu8"]
+bg_color = Color(0.1295586, 0.12955841, 0.12955847, 0.8666667)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.023529412, 0.90588236, 0.9490196, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Player" type="Node3D" unique_id=1002844316 node_paths=PackedStringArray("camera")]
 script = ExtResource("1_gmlin")
 camera = NodePath("Camera3D")
@@ -90,6 +102,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="UIComponent" type="Control" parent="UI_Canvas" unique_id=1826443537 groups=["player_ui"]]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,11 +198,12 @@ text = "DINERO:"
 label_settings = SubResource("LabelSettings_qek5x")
 
 [node name="ShopButton" type="Button" parent="UI_Canvas/UIComponent" unique_id=1264007323]
+z_index = 1
 layout_mode = 0
-offset_left = 28.0
-offset_top = 525.0
-offset_right = 97.0
-offset_bottom = 592.0
+offset_left = 34.0
+offset_top = 519.0
+offset_right = 99.76001
+offset_bottom = 579.0
 scale = Vector2(1.415, 1.415)
 theme_override_font_sizes/font_size = 42
 theme_override_styles/normal = SubResource("StyleBoxFlat_5gtgg")
@@ -199,12 +213,25 @@ text = "🛒"
 icon_alignment = 1
 expand_icon = true
 
-[node name="DestructionButton" type="Button" parent="UI_Canvas/UIComponent" unique_id=744071250]
+[node name="Label" type="Label" parent="UI_Canvas/UIComponent/ShopButton" unique_id=1928730408]
+z_index = 1
 layout_mode = 0
-offset_left = 139.0
-offset_top = 525.0
-offset_right = 208.0
-offset_bottom = 592.0
+offset_left = 16.254417
+offset_top = 60.77739
+offset_right = 56.254417
+offset_bottom = 83.77739
+theme_override_colors/font_color = Color(0.023529412, 0.90588236, 0.9490196, 1)
+theme_override_fonts/font = ExtResource("5_p47bc")
+theme_override_font_sizes/font_size = 9
+text = "TIENDA"
+
+[node name="DestructionButton" type="Button" parent="UI_Canvas/UIComponent" unique_id=744071250]
+z_index = 1
+layout_mode = 0
+offset_left = 143.0
+offset_top = 519.0
+offset_right = 208.76001
+offset_bottom = 579.0
 scale = Vector2(1.415, 1.415)
 theme = SubResource("Theme_qek5x")
 theme_override_font_sizes/font_size = 42
@@ -214,6 +241,93 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_0owmy")
 text = "🔨"
 icon_alignment = 1
 expand_icon = true
+
+[node name="Label" type="Label" parent="UI_Canvas/UIComponent/DestructionButton" unique_id=592148343]
+z_index = 1
+layout_mode = 0
+offset_left = 0.70671344
+offset_top = 60.77739
+offset_right = 67.70671
+offset_bottom = 83.77739
+theme_override_colors/font_color = Color(0.023529412, 0.90588236, 0.9490196, 1)
+theme_override_fonts/font = ExtResource("5_p47bc")
+theme_override_font_sizes/font_size = 9
+text = "CONSTRUCCIÓN"
+
+[node name="Ayuda" type="Button" parent="UI_Canvas/UIComponent" unique_id=26549839]
+z_index = 1
+layout_mode = 0
+offset_left = 253.0
+offset_top = 519.0
+offset_right = 318.76
+offset_bottom = 579.0
+scale = Vector2(1.415, 1.415)
+theme = SubResource("Theme_qek5x")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gtgg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_h17s1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0owmy")
+text = "🗒️"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="UI_Canvas/UIComponent/Ayuda" unique_id=1457758022]
+z_index = 1
+layout_mode = 0
+offset_left = 9.893993
+offset_top = 60.77739
+offset_right = 76.894
+offset_bottom = 83.77739
+theme_override_colors/font_color = Color(0.023529412, 0.90588236, 0.9490196, 1)
+theme_override_fonts/font = ExtResource("5_p47bc")
+theme_override_font_sizes/font_size = 9
+text = "TUTORIAL"
+
+[node name="Salir" type="Button" parent="UI_Canvas/UIComponent" unique_id=1500260751]
+z_index = 1
+layout_mode = 0
+offset_left = 363.0
+offset_top = 519.0
+offset_right = 428.76
+offset_bottom = 579.0
+scale = Vector2(1.415, 1.415)
+theme = SubResource("Theme_qek5x")
+theme_override_font_sizes/font_size = 42
+theme_override_styles/normal = SubResource("StyleBoxFlat_5gtgg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_h17s1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0owmy")
+text = "❌"
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="UI_Canvas/UIComponent/Salir" unique_id=699912471]
+z_index = 1
+layout_mode = 0
+offset_left = 16.961132
+offset_top = 60.77739
+offset_right = 83.961136
+offset_bottom = 83.77739
+theme_override_colors/font_color = Color(0.023529412, 0.90588236, 0.9490196, 1)
+theme_override_fonts/font = ExtResource("5_p47bc")
+theme_override_font_sizes/font_size = 9
+text = "SALIR"
+
+[node name="Toolbar" type="PanelContainer" parent="UI_Canvas/UIComponent" unique_id=193456273]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -557.0
+offset_top = -142.0
+offset_right = -105.535
+offset_bottom = -19.775024
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(300, 40)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cmtu8")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1767391642 groups=["Camera"]]
 transform = Transform3D(1, 0, 0, 0, 0.35908476, 0.93330497, 0, -0.93330497, 0.35908476, 0, 33.801556, -2.0394044e-07)
